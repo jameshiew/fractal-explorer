@@ -30,7 +30,7 @@ func (f renderer) MinSize() fyne.Size {
 }
 
 func (f renderer) Refresh() {
-	f.canvas.labels.info.SetText(f.canvas.viewport.String())
+	f.canvas.updateLabels()
 	canvas.Refresh(f.raster)
 }
 
