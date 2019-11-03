@@ -13,6 +13,34 @@ func Window(title string) fyne.Window {
 	return window
 }
 
+type controllable interface {
+	Up()
+	Left()
+	Right()
+	Down()
+	ZoomIn()
+	ZoomOut()
+}
+
+func controllerFor(controllable controllable) func(*fyne.KeyEvent) {
+	return func(event *fyne.KeyEvent) {
+		switch event.Name {
+		case fyne.KeyUp:
+			controllable.Up()
+		case fyne.KeyLeft:
+			controllable.Left()
+		case fyne.KeyRight:
+			controllable.Right()
+		case fyne.KeyDown:
+			controllable.Down()
+		case fyne.KeyW:
+			controllable.ZoomIn()
+		case fyne.KeyS:
+			controllable.ZoomOut()
+		}
+	}
+}
+
 func setUpWindow(window fyne.Window) {
 	cnvs := newFractalCanvas()
 	window.SetContent(
@@ -21,22 +49,9 @@ func setUpWindow(window fyne.Window) {
 			cnvs.labels.info,
 		),
 	)
+	ctrlr := controllerFor(&cnvs.viewport)
 	window.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
-		const zoomIncrement = 0.001
-		switch event.Name {
-		case fyne.KeyUp:
-			cnvs.viewport.center.y += 1
-		case fyne.KeyLeft:
-			cnvs.viewport.center.x -= 1
-		case fyne.KeyRight:
-			cnvs.viewport.center.x += 1
-		case fyne.KeyDown:
-			cnvs.viewport.center.y -= 1
-		case fyne.KeyW:
-			cnvs.viewport.scale -= zoomIncrement
-		case fyne.KeyS:
-			cnvs.viewport.scale += zoomIncrement
-		}
+		ctrlr(event)
 		widget.Refresh(&cnvs)
 	})
 }

@@ -6,6 +6,8 @@ import (
 	"image/color"
 )
 
+const zoomIncrement = 0.001
+
 type complexColorer func(complex128) color.Color
 
 type viewport struct {
@@ -14,6 +16,32 @@ type viewport struct {
 	center  struct {
 		x, y float64
 	}
+}
+
+func (v *viewport) Up() {
+	v.center.y++
+}
+
+func (v *viewport) Left() {
+	v.center.x--
+}
+
+func (v *viewport) Right() {
+	v.center.x++
+}
+
+func (v *viewport) Down() {
+	v.center.y--
+}
+
+func (v *viewport) ZoomIn() {
+	v.scale -= zoomIncrement
+
+}
+
+func (v *viewport) ZoomOut() {
+	v.scale += zoomIncrement
+
 }
 
 func (v *viewport) String() string {
