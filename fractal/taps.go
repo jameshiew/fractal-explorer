@@ -13,8 +13,8 @@ func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
 			f.Size().Width,
 			f.Size().Height,
 		)
-	f.viewport.center.x += deltaX
-	f.viewport.center.y += deltaY
+	f.viewport.center.x += deltaX * f.viewport.scale
+	f.viewport.center.y += deltaY * f.viewport.scale
 	widget.Refresh(f)
 }
 

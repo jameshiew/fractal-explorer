@@ -19,9 +19,11 @@ func (v *viewport) String() string {
 
 func (d *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	x, y := toCartesian(pixelX, pixelY, width, height)
+	x *= d.scale
+	y *= d.scale
 	x += d.center.x
 	y += d.center.y
-	c := complex(x*d.scale, y*d.scale)
+	c := complex(x, y)
 	iter := d.mandelbrot.iterateWhileNotReachingBound(c)
 	if iter == d.mandelbrot.maxIterations {
 		return color.Black
