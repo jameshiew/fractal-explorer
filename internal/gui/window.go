@@ -3,6 +3,7 @@ package gui
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
+	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
 )
 
@@ -16,7 +17,8 @@ func Window(title string) fyne.Window {
 func setUpWindow(window fyne.Window) {
 	cnvs := newFractalWidget()
 	window.SetContent(
-		widget.NewVBox(
+		fyne.NewContainerWithLayout(
+			layout.NewMaxLayout(),
 			&cnvs,
 			cnvs.labels.info,
 		),
