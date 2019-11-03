@@ -11,13 +11,13 @@ import (
 
 const title = "Fractal Explorer"
 
-func toCoordinates(px, py, w, h int) (x, y int) {
-	return px - w/2, -py + h/2
+func toCartesian(pixelX, pixelY, width, height int) (x, y int) {
+	return pixelX - width/2, -pixelY + height/2
 }
 
-func stubPixelColor(px, py, w, h int) color.Color {
-	log.Printf("Called for (%d, %d) - [%d * %d]\n", px, py, w, h)
-	x, y := toCoordinates(px, py, w, h)
+func colorForPixel(pixelX, pixelY, width, height int) color.Color {
+	log.Printf("Called for (%d, %d) - [%d * %d]\n", pixelX, pixelY, width, height)
+	x, y := toCartesian(pixelX, pixelY, width, height)
 	c := complex(float64(x)/100, float64(y)/100)
 	if mandelbrot(c) == maxIterations {
 		return color.Black
@@ -36,7 +36,7 @@ func Run() {
 
 	w := app.NewWindow(title)
 	vp := &viewport{
-		canvas: canvas.NewRasterWithPixels(stubPixelColor),
+		canvas: canvas.NewRasterWithPixels(colorForPixel),
 	}
 	w.SetContent(widget.NewVBox(
 		fyne.NewContainerWithLayout(vp, vp.canvas),
