@@ -7,7 +7,7 @@ build:
   stage: build
   script:
     - go mod download
-    - go build cmd/fractalexplorer
+    - go build ./cmd/fractalexplorer
   artifacts:
     paths:
       - main
