@@ -6,7 +6,6 @@ import (
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 	"image/color"
-	"log"
 )
 
 const title = "Fractal Explorer"
@@ -16,7 +15,6 @@ func toCartesian(pixelX, pixelY, width, height int) (x, y int) {
 }
 
 func colorForPixel(pixelX, pixelY, width, height int) color.Color {
-	log.Printf("Called for (%d, %d) - [%d * %d]\n", pixelX, pixelY, width, height)
 	x, y := toCartesian(pixelX, pixelY, width, height)
 	c := complex(float64(x)/100, float64(y)/100)
 	if mandelbrot(c) == maxIterations {
