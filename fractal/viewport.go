@@ -26,10 +26,10 @@ func (v *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	y += v.center.y
 	c := complex(x, y)
 	iter := v.mandelbrot.IterateWhileNotReachingBound(c)
-	if iter == v.mandelbrot.maxIterations {
+	if iter == v.mandelbrot.MaxIterations() {
 		return color.Black
 	}
-	scale := float64(iter) / float64(v.mandelbrot.maxIterations)
+	scale := float64(iter) / float64(v.mandelbrot.MaxIterations())
 	return color.RGBA{
 		R: uint8(scale * 255),
 		G: uint8(scale * 100),

@@ -28,14 +28,6 @@ func setUpWindow(window fyne.Window) {
 			cnvs.viewport.scale -= zoomIncrement
 		case fyne.KeyS:
 			cnvs.viewport.scale += zoomIncrement
-		case fyne.KeyA:
-			cnvs.viewport.mandelbrot.maxIterations--
-		case fyne.KeyD:
-			cnvs.viewport.mandelbrot.maxIterations++
-		case fyne.KeyQ:
-			cnvs.viewport.mandelbrot.bound--
-		case fyne.KeyE:
-			cnvs.viewport.mandelbrot.bound++
 		}
 		widget.Refresh(&cnvs)
 	})
