@@ -14,7 +14,7 @@ func Window(title string) fyne.Window {
 }
 
 func setUpWindow(window fyne.Window) {
-	cnvs := newFractalCanvas()
+	cnvs := newFractalWidget()
 	window.SetContent(
 		widget.NewVBox(
 			&cnvs,

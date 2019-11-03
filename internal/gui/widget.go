@@ -36,7 +36,7 @@ type fractalWidget struct {
 	position fyne.Position
 }
 
-func newFractalCanvas() fractalWidget {
+func newFractalWidget() fractalWidget {
 	return fractalWidget{
 		viewport: viewport.New(forMandelbrot(mandelbrot2.New(50, 2))),
 		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
