@@ -13,13 +13,15 @@ type drawer struct {
 func (d *drawer) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	x, y := d.toCartesian(pixelX, pixelY, width, height)
 	c := complex(x*d.scale, y*d.scale)
-	if d.mandelbrot.iterateWhileNotReachingBound(c) == d.mandelbrot.maxIterations {
+	iter := d.mandelbrot.iterateWhileNotReachingBound(c)
+	if iter == d.mandelbrot.maxIterations {
 		return color.Black
 	}
+	scale := float64(iter) / float64(d.mandelbrot.maxIterations)
 	return color.RGBA{
-		R: 255,
-		G: 100,
-		B: 100,
+		R: uint8(scale * 255),
+		G: uint8(scale * 100),
+		B: uint8(scale * 100),
 		A: 255,
 	}
 }
