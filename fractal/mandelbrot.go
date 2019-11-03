@@ -4,15 +4,15 @@ import (
 	"math/cmplx"
 )
 
-const (
-	maxIterations = 50
-	bound         = 2
-)
+type mandelbrot struct {
+	maxIterations uint
+	bound         float64
+}
 
-func mandelbrot(c complex128) uint {
+func (m mandelbrot) iterateWhileNotReachingBound(c complex128) (iterations uint) {
 	var n uint
 	var z complex128
-	for cmplx.Abs(z) <= bound && n < maxIterations {
+	for cmplx.Abs(z) <= m.bound && n < m.maxIterations {
 		z = z*z + c
 		n++
 	}

@@ -14,10 +14,15 @@ func toCartesian(pixelX, pixelY, width, height int) (x, y int) {
 	return pixelX - width/2, -pixelY + height/2
 }
 
+var myMandelbrot = mandelbrot{
+	maxIterations: 50,
+	bound:         2,
+}
+
 func colorForPixel(pixelX, pixelY, width, height int) color.Color {
 	x, y := toCartesian(pixelX, pixelY, width, height)
 	c := complex(float64(x)/100, float64(y)/100)
-	if mandelbrot(c) == maxIterations {
+	if myMandelbrot.iterateWhileNotReachingBound(c) == myMandelbrot.maxIterations {
 		return color.Black
 	}
 	return color.RGBA{
