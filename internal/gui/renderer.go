@@ -25,11 +25,11 @@ type instrumenter struct {
 	rendered uint
 }
 
-func (i *instrumenter) instrument() (finish func()) {
+func (i *instrumenter) instrument(nPixels int) (finish func()) {
 	start := time.Now()
 	return func() {
 		duration := time.Since(start)
-		log.Printf("Took %v to render image (%v renders)", duration, i.rendered)
+		log.Printf("%vpx in %v [%v px/s] (%v renders)", nPixels, duration, float64(nPixels)/float64(duration)*1_000_000_000, i.rendered)
 		i.rendered++
 	}
 }
@@ -74,7 +74,8 @@ func (r renderer) Destroy() {
 
 // drawSingleThreaded is faster for larger canvases for whatever reason
 func (r *renderer) drawSingleThreaded(width, height int) image.Image {
-	defer r.instrument()()
+	nPixels := width * height
+	defer r.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
@@ -85,18 +86,19 @@ func (r *renderer) drawSingleThreaded(width, height int) image.Image {
 }
 
 func (r *renderer) draw(width, height int) image.Image {
-	defer r.instrument()()
+	nPixels := width * height
+	defer r.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	const nWorkers = 1024
 	jobs := make(chan struct {
 		x, y int
-	}, width*height)
+	}, nPixels)
 	pixels := make(chan struct {
 		x, y  int
 		color color.Color
-	}, width*height)
+	}, nPixels)
 	var wg sync.WaitGroup
-	wg.Add(width * height)
+	wg.Add(nPixels)
 	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
 		for {
 			select {
