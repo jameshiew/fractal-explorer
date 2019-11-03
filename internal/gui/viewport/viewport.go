@@ -2,7 +2,6 @@ package viewport
 
 import (
 	"fmt"
-	"image/color"
 )
 
 const (
@@ -10,20 +9,16 @@ const (
 	zoomIncrement = 0.001
 )
 
-type complexColorer func(complex128) color.Color
-
 type Viewport struct {
-	colorer complexColorer
-	scale   float64
-	center  struct {
+	scale  float64
+	center struct {
 		x, y float64
 	}
 }
 
-func New(colorer complexColorer) Viewport {
+func New() Viewport {
 	return Viewport{
-		scale:   defaultScale,
-		colorer: colorer,
+		scale: defaultScale,
 	}
 }
 
@@ -60,14 +55,13 @@ func (v *Viewport) String() string {
 	return fmt.Sprintf("(%v, %v) @ %vx", v.center.x, v.center.y, v.scale)
 }
 
-func (v *Viewport) PixelColor(pixelX, pixelY, width, height int) color.Color {
+func (v *Viewport) PixelToComplex(pixelX, pixelY, width, height int) complex128 {
 	x, y := toVector(pixelX, pixelY, width, height)
 	x *= v.scale
 	y *= v.scale
 	x += v.center.x
 	y += v.center.y
-	c := complex(x, y)
-	return v.colorer(c)
+	return complex(x, y)
 }
 
 func toVector(pixelX, pixelY, width, height int) (x, y float64) {

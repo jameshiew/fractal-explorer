@@ -2,14 +2,14 @@ package gui
 
 import (
 	"fractal-explorer/internal/gui/viewport"
-	mandelbrot2 "fractal-explorer/internal/mandelbrot"
+	"fractal-explorer/internal/mandelbrot"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 	"image/color"
 )
 
-func forMandelbrot(fractal mandelbrot2.Mandelbrot) func(complex128) color.Color {
+func forMandelbrot(fractal mandelbrot.Mandelbrot) func(complex128) color.Color {
 	return func(c complex128) color.Color {
 		iter := fractal.IterateWhileNotReachingBound(c)
 		if iter == fractal.MaxIterations() {
@@ -38,7 +38,7 @@ type fractalWidget struct {
 
 func newFractalWidget() fractalWidget {
 	return fractalWidget{
-		viewport: viewport.New(forMandelbrot(mandelbrot2.New(50, 2))),
+		viewport: viewport.New(),
 		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
 }
@@ -83,8 +83,11 @@ func (f *fractalWidget) Refresh() {
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
-		refresher:    f,
-		pixelColorer: f.viewport.PixelColor,
+		refresher: f,
+		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
+			colorer := forMandelbrot(mandelbrot.New(50, 2))
+			return colorer(f.viewport.PixelToComplex(pixelX, pixelY, width, height))
+		},
 	}
 
 	raster := canvas.NewRaster(renderer.draw)
