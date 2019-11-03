@@ -6,12 +6,15 @@ type drawer struct {
 	scale struct {
 		x, y float64
 	}
+	position struct {
+		x, y float64
+	}
 	mandelbrot mandelbrot
 }
 
 func (d *drawer) pixelColor(pixelX, pixelY, width, height int) color.Color {
-	x, y := toCartesian(pixelX, pixelY, width, height)
-	c := complex(float64(x)*d.scale.x, float64(y)*d.scale.y)
+	x, y := d.toCartesian(pixelX, pixelY, width, height)
+	c := complex(x*d.scale.x, y*d.scale.y)
 	if d.mandelbrot.iterateWhileNotReachingBound(c) == d.mandelbrot.maxIterations {
 		return color.Black
 	}
@@ -23,6 +26,6 @@ func (d *drawer) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	}
 }
 
-func toCartesian(pixelX, pixelY, width, height int) (x, y int) {
-	return pixelX - width/2, -pixelY + height/2
+func (d *drawer) toCartesian(pixelX, pixelY, width, height int) (x, y float64) {
+	return d.position.x + float64(pixelX-width/2), d.position.y + float64(-pixelY+height/2)
 }

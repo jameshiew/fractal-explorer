@@ -3,12 +3,16 @@ package fractal
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/widget"
-	"log"
 )
 
-func (f *fractalCanvas) Tapped(*fyne.PointEvent) {
-	// TODO: implement zoom here
-	log.Print("tapped")
+func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
+	f.drawer.position.x, f.drawer.position.y =
+		f.drawer.toCartesian(
+			event.Position.X,
+			event.Position.Y,
+			f.size.Width,
+			f.size.Height,
+		)
 	widget.Refresh(f)
 }
 
