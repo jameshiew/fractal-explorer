@@ -67,6 +67,15 @@ func (f *fractalWidget) Refresh() {
 	f.labels.info.SetText(f.viewport.String())
 }
 
+// darkBlend is quite dark
+func darkBlend(z complex128) color.Color {
+	return blend(
+		forMandelbrot(green, mandelbrot.New(125, 2))(z),
+		forMandelbrot(blue, mandelbrot.New(250, 2))(z),
+		forMandelbrot(red, mandelbrot.New(500, 2))(z),
+	)
+}
+
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher: f,
@@ -74,9 +83,8 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
 			z := complex(x, y)
 			return blend(
-				forMandelbrot(green, mandelbrot.New(125, 2))(z),
-				forMandelbrot(blue, mandelbrot.New(250, 2))(z),
-				forMandelbrot(red, mandelbrot.New(500, 2))(z),
+				forMandelbrot(green, mandelbrot.New(75, 2))(z),
+				forMandelbrot(blue, mandelbrot.New(90, 2))(z),
 			)
 		},
 	}
