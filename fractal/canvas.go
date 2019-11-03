@@ -7,9 +7,28 @@ import (
 )
 
 type fractalCanvas struct {
+	drawer drawer
+
 	hidden   bool
 	size     fyne.Size
 	position fyne.Position
+}
+
+func NewFractalCanvas() fractalCanvas {
+	return fractalCanvas{
+		drawer: drawer{
+			scale: struct {
+				x, y float64
+			}{
+				x: 0.01,
+				y: 0.01,
+			},
+			mandelbrot: mandelbrot{
+				maxIterations: 50,
+				bound:         2,
+			},
+		},
+	}
 }
 
 func (f *fractalCanvas) Size() fyne.Size {

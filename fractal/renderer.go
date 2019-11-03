@@ -53,19 +53,7 @@ func (f *renderer) draw(w, h int) image.Image {
 
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			drwr := &drawer{
-				scale: struct {
-					x, y float64
-				}{
-					x: 0.01,
-					y: 0.01,
-				},
-				mandelbrot: mandelbrot{
-					maxIterations: 50,
-					bound:         2,
-				},
-			}
-			img.Set(x, y, drwr.pixelColor(x, y, w, h))
+			img.Set(x, y, f.fractalCanvas.drawer.pixelColor(x, y, w, h))
 		}
 	}
 	return img
