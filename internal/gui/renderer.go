@@ -13,12 +13,18 @@ const (
 	minHeightPixels = 240
 )
 
+// refresher implementations provide a callback for when they should be refreshed
+type refresher interface {
+	Refresh()
+}
+
 type renderer struct {
 	raster   *canvas.Raster
 	objects  []fyne.CanvasObject
 	imgCache *image.RGBA
 
-	canvas *fractalCanvas
+	pixelColorer func(pixelX, pixelY, width, height int) color.Color
+	refresher    refresher
 }
 
 func (f renderer) Layout(size fyne.Size) {
@@ -30,7 +36,7 @@ func (f renderer) MinSize() fyne.Size {
 }
 
 func (f renderer) Refresh() {
-	f.canvas.updateLabels()
+	f.refresher.Refresh()
 	canvas.Refresh(f.raster)
 }
 
@@ -59,7 +65,7 @@ func (f *renderer) draw(w, h int) image.Image {
 
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			img.Set(x, y, f.canvas.viewport.PixelColor(x, y, w, h))
+			img.Set(x, y, f.pixelColorer(x, y, w, h))
 		}
 	}
 	return img

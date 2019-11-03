@@ -77,12 +77,15 @@ func (f *fractalCanvas) Hide() {
 	f.hidden = true
 }
 
-func (f *fractalCanvas) updateLabels() {
+func (f *fractalCanvas) Refresh() {
 	f.labels.info.SetText(f.viewport.String())
 }
 
 func (f *fractalCanvas) CreateRenderer() fyne.WidgetRenderer {
-	renderer := &renderer{canvas: f}
+	renderer := &renderer{
+		refresher:    f,
+		pixelColorer: f.viewport.PixelColor,
+	}
 
 	raster := canvas.NewRaster(renderer.draw)
 	renderer.raster = raster
