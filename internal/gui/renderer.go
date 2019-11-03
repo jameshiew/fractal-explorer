@@ -7,6 +7,7 @@ import (
 	"image"
 	"image/color"
 	"log"
+	"sync"
 	"time"
 )
 
@@ -28,7 +29,7 @@ func (i *instrumenter) instrument() (finish func()) {
 	start := time.Now()
 	return func() {
 		duration := time.Since(start)
-		log.Printf("Took %v to render image", duration)
+		log.Printf("Took %v to render image (%v renders)", duration, i.rendered)
 		i.rendered++
 	}
 }
@@ -74,10 +75,35 @@ func (f renderer) Destroy() {
 func (f *renderer) draw(w, h int) image.Image {
 	defer f.instrument()()
 	img := image.NewRGBA(image.Rect(0, 0, w, h))
+	pixels := make(chan struct {
+		x, y  int
+		color color.Color
+	})
+	var wg sync.WaitGroup
+	wg.Add(w * h)
+	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
+		for {
+			select {
+			case pxl := <-pixels:
+				img.Set(pxl.x, pxl.y, pxl.color)
+				wg.Done()
+			}
+		}
+	}()
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			img.Set(x, y, f.pixelColorer(x, y, w, h))
+			go func(x, y int) {
+				pixels <- struct {
+					x, y  int
+					color color.Color
+				}{
+					x:     x,
+					y:     y,
+					color: f.pixelColorer(x, y, w, h),
+				}
+			}(x, y)
 		}
 	}
+	wg.Wait()
 	return img
 }
