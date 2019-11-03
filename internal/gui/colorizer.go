@@ -31,18 +31,19 @@ func blend(colors ...color.Color) color.Color {
 	}
 }
 
-func forMandelbrot(base color.RGBA64, fractal mandelbrot.Mandelbrot) colorizer {
+func forMandelbrot(base color.Color, fractal mandelbrot.Mandelbrot) colorizer {
 	return func(c complex128) color.Color {
 		iter := fractal.IterateWhileNotReachingBound(c)
 		if iter == fractal.MaxIterations() {
 			return color.Black
 		}
 		scale := float64(iter) / float64(fractal.MaxIterations())
+		r, g, b, a := base.RGBA()
 		return color.RGBA64{
-			R: uint16(scale * float64(base.R)),
-			G: uint16(scale * float64(base.G)),
-			B: uint16(scale * float64(base.B)),
-			A: base.A,
+			R: uint16(scale * float64(r)),
+			G: uint16(scale * float64(g)),
+			B: uint16(scale * float64(b)),
+			A: uint16(a),
 		}
 	}
 }
