@@ -14,7 +14,7 @@ type fractalCanvas struct {
 	position fyne.Position
 }
 
-func NewFractalCanvas() fractalCanvas {
+func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
 		drawer: drawer{
 			scale: struct {

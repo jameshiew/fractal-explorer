@@ -15,7 +15,7 @@ func Run() {
 	app := app.New()
 
 	w := app.NewWindow(title)
-	cnvs := NewFractalCanvas()
+	cnvs := newFractalCanvas()
 	w.SetContent(&cnvs)
 	w.ShowAndRun()
 }
