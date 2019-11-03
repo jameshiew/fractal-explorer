@@ -1,0 +1,13 @@
+---
+stages:
+  - build
+
+build:
+  image: golang:1.13.4-buster
+  stage: build
+  script:
+    - go mod download
+    - go build cmd/fractalexplorer
+  artifacts:
+    paths:
+      - main
