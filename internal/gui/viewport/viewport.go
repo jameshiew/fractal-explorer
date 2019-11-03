@@ -5,7 +5,10 @@ import (
 	"image/color"
 )
 
-const zoomIncrement = 0.001
+const (
+	defaultScale  = 0.01
+	zoomIncrement = 0.001
+)
 
 type complexColorer func(complex128) color.Color
 
@@ -19,7 +22,7 @@ type Viewport struct {
 
 func New(colorer complexColorer) Viewport {
 	return Viewport{
-		scale:   0.01,
+		scale:   defaultScale,
 		colorer: colorer,
 	}
 }
