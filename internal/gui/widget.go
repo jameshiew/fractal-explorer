@@ -37,10 +37,12 @@ type fractalWidget struct {
 }
 
 func newFractalWidget() fractalWidget {
-	return fractalWidget{
+	wdgt := fractalWidget{
 		viewport: viewport.New(),
 		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
+	wdgt.Refresh()
+	return wdgt
 }
 
 func (f *fractalWidget) Size() fyne.Size {
