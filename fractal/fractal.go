@@ -6,6 +6,7 @@ import (
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 	"image/color"
+	"log"
 )
 
 const title = "Fractal Explorer"
@@ -22,7 +23,17 @@ func (v *viewport) MinSize(objects []fyne.CanvasObject) fyne.Size {
 	return fyne.NewSize(320, 240)
 }
 
+func toCoordinates(px, py, w, h int) (x, y int) {
+	return px - w/2, -py + h/2
+}
+
 func stubPixelColor(px, py, w, h int) color.Color {
+	log.Printf("Called for (%d, %d) - [%d * %d]\n", px, py, w, h)
+	x, y := toCoordinates(px, py, w, h)
+	c := complex(float64(x), float64(y))
+	if mandelbrot(c) == maxIterations {
+		return color.Black
+	}
 	return color.RGBA{
 		R: 255,
 		G: 100,
