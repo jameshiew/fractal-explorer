@@ -67,21 +67,33 @@ func (f *fractalWidget) Refresh() {
 	f.labels.info.SetText(f.viewport.String())
 }
 
+func blend(colors ...color.Color) color.Color {
+	var r, g, b, a uint32
+	for _, c := range colors {
+		cr, cg, cb, ca := c.RGBA()
+		r += cr
+		g += cg
+		b += cb
+		a += ca
+	}
+	return color.RGBA64{
+		R: uint16(r / uint32(len(colors))),
+		G: uint16(g / uint32(len(colors))),
+		B: uint16(b / uint32(len(colors))),
+		A: uint16(a / uint32(len(colors))),
+	}
+}
+
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher: f,
 		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
-			high := forMandelbrot(red, mandelbrot.New(500, 2))
-			low := forMandelbrot(green, mandelbrot.New(125, 2))
 			z := f.viewport.PixelToComplex(pixelX, pixelY, width, height)
-			hr, hg, hb, ha := high(z).RGBA()
-			lr, lg, lb, la := low(z).RGBA()
-			return color.RGBA64{
-				R: uint16(hr+lr) / 2,
-				G: uint16(hg+lg) / 2,
-				B: uint16(hb+lb) / 2,
-				A: uint16(ha+la) / 2,
-			}
+			return blend(
+				forMandelbrot(green, mandelbrot.New(125, 2))(z),
+				forMandelbrot(blue, mandelbrot.New(250, 2))(z),
+				forMandelbrot(red, mandelbrot.New(500, 2))(z),
+			)
 		},
 	}
 
