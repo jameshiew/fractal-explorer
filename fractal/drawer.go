@@ -3,8 +3,8 @@ package fractal
 import "image/color"
 
 type drawer struct {
-	scale    float64
-	position struct {
+	scale  float64
+	center struct {
 		x, y float64
 	}
 	mandelbrot mandelbrot
@@ -27,5 +27,5 @@ func (d *drawer) pixelColor(pixelX, pixelY, width, height int) color.Color {
 }
 
 func (d *drawer) toCartesian(pixelX, pixelY, width, height int) (x, y float64) {
-	return d.position.x + float64(pixelX-width/2), d.position.y + float64(-pixelY+height/2)
+	return d.center.x + float64(pixelX-width/2), d.center.y + float64(-pixelY+height/2)
 }

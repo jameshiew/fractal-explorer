@@ -6,7 +6,7 @@ import (
 )
 
 func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
-	f.drawer.position.x, f.drawer.position.y =
+	f.drawer.center.x, f.drawer.center.y =
 		f.drawer.toCartesian(
 			event.Position.X,
 			event.Position.Y,

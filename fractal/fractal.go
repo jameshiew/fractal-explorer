@@ -23,13 +23,13 @@ func Run() {
 		const zoomFactor = 1.1
 		switch event.Name {
 		case fyne.KeyUp:
-			cnvs.drawer.position.y += 1
+			cnvs.drawer.center.y += 1
 		case fyne.KeyLeft:
-			cnvs.drawer.position.x -= 1
+			cnvs.drawer.center.x -= 1
 		case fyne.KeyRight:
-			cnvs.drawer.position.x += 1
+			cnvs.drawer.center.x += 1
 		case fyne.KeyDown:
-			cnvs.drawer.position.y -= 1
+			cnvs.drawer.center.y -= 1
 		case fyne.KeyW:
 			cnvs.drawer.scale /= zoomFactor
 		case fyne.KeyS:
