@@ -21,8 +21,8 @@ type fractalCanvas struct {
 func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
 		viewport: viewport{
-			scale:      0.01,
-			mandelbrot: mandelbrot.New(50, 2),
+			scale:   0.01,
+			colorer: forMandelbrot(mandelbrot.New(50, 2)),
 		},
 		labels: struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
