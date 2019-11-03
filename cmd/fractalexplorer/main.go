@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fractal-explorer/internal/fractal"
+	"fractal-explorer/internal/gui"
 )
 
 const title = "Fractal Explorer"
 
 func main() {
-	window := fractal.Window(title)
+	window := gui.Window(title)
 	window.RequestFocus()
 	window.ShowAndRun()
 }

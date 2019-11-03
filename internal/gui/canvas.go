@@ -1,4 +1,4 @@
-package fractal
+package gui
 
 import (
 	mandelbrot2 "fractal-explorer/internal/mandelbrot"

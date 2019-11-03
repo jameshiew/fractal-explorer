@@ -1,4 +1,4 @@
-package fractal
+package gui
 
 import (
 	"fmt"
