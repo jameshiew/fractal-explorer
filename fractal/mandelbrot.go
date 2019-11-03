@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	maxIterations = 2
+	maxIterations = 50
 	bound         = 2
 )
 

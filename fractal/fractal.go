@@ -30,7 +30,7 @@ func toCoordinates(px, py, w, h int) (x, y int) {
 func stubPixelColor(px, py, w, h int) color.Color {
 	log.Printf("Called for (%d, %d) - [%d * %d]\n", px, py, w, h)
 	x, y := toCoordinates(px, py, w, h)
-	c := complex(float64(x), float64(y))
+	c := complex(float64(x)/100, float64(y)/100)
 	if mandelbrot(c) == maxIterations {
 		return color.Black
 	}
