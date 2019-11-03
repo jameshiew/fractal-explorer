@@ -17,18 +17,18 @@ func (v *viewport) String() string {
 	return fmt.Sprintf("%v - (%v, %v) @ %vx", v.mandelbrot.String(), v.center.x, v.center.y, v.scale)
 }
 
-func (d *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
+func (v *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	x, y := toCartesian(pixelX, pixelY, width, height)
-	x *= d.scale
-	y *= d.scale
-	x += d.center.x
-	y += d.center.y
+	x *= v.scale
+	y *= v.scale
+	x += v.center.x
+	y += v.center.y
 	c := complex(x, y)
-	iter := d.mandelbrot.iterateWhileNotReachingBound(c)
-	if iter == d.mandelbrot.maxIterations {
+	iter := v.mandelbrot.iterateWhileNotReachingBound(c)
+	if iter == v.mandelbrot.maxIterations {
 		return color.Black
 	}
-	scale := float64(iter) / float64(d.mandelbrot.maxIterations)
+	scale := float64(iter) / float64(v.mandelbrot.maxIterations)
 	return color.RGBA{
 		R: uint8(scale * 255),
 		G: uint8(scale * 100),
