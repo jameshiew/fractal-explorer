@@ -2,7 +2,7 @@ package fractal
 
 import (
 	"fmt"
-	"fractal-explorer/fractal/mandelbrot"
+	mandelbrot2 "fractal-explorer/internal/fractal/mandelbrot"
 	"image/color"
 )
 
@@ -20,7 +20,7 @@ func (v *viewport) String() string {
 	return fmt.Sprintf("(%v, %v) @ %vx", v.center.x, v.center.y, v.scale)
 }
 
-func forMandelbrot(fractal mandelbrot.Mandelbrot) complexColorer {
+func forMandelbrot(fractal mandelbrot2.Mandelbrot) complexColorer {
 	return func(c complex128) color.Color {
 		iter := fractal.IterateWhileNotReachingBound(c)
 		if iter == fractal.MaxIterations() {

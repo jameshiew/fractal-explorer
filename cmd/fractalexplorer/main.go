@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fractal-explorer/fractal"
+	"fractal-explorer/internal/fractal"
 )
 
 func main() {
