@@ -43,38 +43,38 @@ type renderer struct {
 	refresher    refresher
 }
 
-func (f renderer) Layout(size fyne.Size) {
-	f.raster.Resize(size)
+func (r renderer) Layout(size fyne.Size) {
+	r.raster.Resize(size)
 }
 
-func (f renderer) MinSize() fyne.Size {
+func (r renderer) MinSize() fyne.Size {
 	return fyne.NewSize(minWidthPixels, minHeightPixels)
 }
 
-func (f renderer) Refresh() {
-	f.refresher.Refresh()
-	canvas.Refresh(f.raster)
+func (r renderer) Refresh() {
+	r.refresher.Refresh()
+	canvas.Refresh(r.raster)
 }
 
-func (f renderer) ApplyTheme() {
+func (r renderer) ApplyTheme() {
 	// do nothing
 }
 
-func (f renderer) BackgroundColor() color.Color {
+func (r renderer) BackgroundColor() color.Color {
 	return theme.BackgroundColor()
 }
 
-func (f renderer) Objects() []fyne.CanvasObject {
-	return f.objects
+func (r renderer) Objects() []fyne.CanvasObject {
+	return r.objects
 }
 
-func (f renderer) Destroy() {
+func (r renderer) Destroy() {
 	// do nothing
 }
 
-func (f *renderer) draw(w, h int) image.Image {
-	defer f.instrument()()
-	img := image.NewRGBA(image.Rect(0, 0, w, h))
+func (r *renderer) draw(width, height int) image.Image {
+	defer r.instrument()()
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	const nWorkers = 1024
 	jobs := make(chan struct {
 		x, y int
@@ -84,7 +84,7 @@ func (f *renderer) draw(w, h int) image.Image {
 		color color.Color
 	}, nWorkers)
 	var wg sync.WaitGroup
-	wg.Add(w * h)
+	wg.Add(width * height)
 	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
 		for {
 			select {
@@ -103,13 +103,13 @@ func (f *renderer) draw(w, h int) image.Image {
 				}{
 					x:     j.x,
 					y:     j.y,
-					color: f.pixelColorer(j.x, j.y, w, h),
+					color: r.pixelColorer(j.x, j.y, width, height),
 				}
 			}
 		}()
 	}
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
 			jobs <- struct{ x, y int }{x: x, y: y}
 		}
 	}
