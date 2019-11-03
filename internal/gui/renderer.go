@@ -90,11 +90,11 @@ func (r *renderer) draw(width, height int) image.Image {
 	const nWorkers = 1024
 	jobs := make(chan struct {
 		x, y int
-	}, nWorkers)
+	}, width*height)
 	pixels := make(chan struct {
 		x, y  int
 		color color.Color
-	}, nWorkers)
+	}, width*height)
 	var wg sync.WaitGroup
 	wg.Add(width * height)
 	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
