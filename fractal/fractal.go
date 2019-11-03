@@ -20,7 +20,7 @@ func Run() {
 	cnvs := newFractalCanvas()
 	w.SetContent(&cnvs)
 	w.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
-		const zoomFactor = 1.1
+		const zoomIncrement = 0.001
 		switch event.Name {
 		case fyne.KeyUp:
 			cnvs.drawer.center.y += 1
@@ -31,9 +31,9 @@ func Run() {
 		case fyne.KeyDown:
 			cnvs.drawer.center.y -= 1
 		case fyne.KeyW:
-			cnvs.drawer.scale /= zoomFactor
+			cnvs.drawer.scale -= zoomIncrement
 		case fyne.KeyS:
-			cnvs.drawer.scale *= zoomFactor
+			cnvs.drawer.scale += zoomIncrement
 		case fyne.KeyA:
 			cnvs.drawer.mandelbrot.maxIterations--
 		case fyne.KeyD:
