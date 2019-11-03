@@ -17,12 +17,7 @@ type fractalCanvas struct {
 func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
 		drawer: drawer{
-			scale: struct {
-				x, y float64
-			}{
-				x: 0.01,
-				y: 0.01,
-			},
+			scale: 0.01,
 			mandelbrot: mandelbrot{
 				maxIterations: 50,
 				bound:         2,

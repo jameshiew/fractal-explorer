@@ -3,9 +3,7 @@ package fractal
 import "image/color"
 
 type drawer struct {
-	scale struct {
-		x, y float64
-	}
+	scale    float64
 	position struct {
 		x, y float64
 	}
@@ -14,7 +12,7 @@ type drawer struct {
 
 func (d *drawer) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	x, y := d.toCartesian(pixelX, pixelY, width, height)
-	c := complex(x*d.scale.x, y*d.scale.y)
+	c := complex(x*d.scale, y*d.scale)
 	if d.mandelbrot.iterateWhileNotReachingBound(c) == d.mandelbrot.maxIterations {
 		return color.Black
 	}

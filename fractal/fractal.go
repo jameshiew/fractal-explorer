@@ -23,12 +23,10 @@ func Run() {
 		const zoomFactor = 1.1
 		switch event.Name {
 		case fyne.KeyQ:
-			cnvs.drawer.scale.x /= zoomFactor
-			cnvs.drawer.scale.y /= zoomFactor
+			cnvs.drawer.scale /= zoomFactor
 			widget.Refresh(&cnvs)
 		case fyne.KeyW:
-			cnvs.drawer.scale.x *= zoomFactor
-			cnvs.drawer.scale.y *= zoomFactor
+			cnvs.drawer.scale *= zoomFactor
 			widget.Refresh(&cnvs)
 		}
 	})
