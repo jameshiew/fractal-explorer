@@ -7,10 +7,7 @@ import (
 const defaultScale = 0.01
 
 type Viewport struct {
-	scale  float64
-	center struct {
-		x, y float64
-	}
+	scale, x, y float64
 }
 
 func New() Viewport {
@@ -20,24 +17,24 @@ func New() Viewport {
 }
 
 func (v *Viewport) Move(deltaX, deltaY float64) {
-	v.center.x += deltaX * v.scale
-	v.center.y += deltaY * v.scale
+	v.x += deltaX * v.scale
+	v.y += deltaY * v.scale
 }
 
 func (v *Viewport) Up() {
-	v.center.y++
+	v.y++
 }
 
 func (v *Viewport) Left() {
-	v.center.x--
+	v.x--
 }
 
 func (v *Viewport) Right() {
-	v.center.x++
+	v.x++
 }
 
 func (v *Viewport) Down() {
-	v.center.y--
+	v.y--
 }
 
 func (v *Viewport) Zoom(factor float64) {
@@ -45,15 +42,15 @@ func (v *Viewport) Zoom(factor float64) {
 }
 
 func (v *Viewport) String() string {
-	return fmt.Sprintf("(%v, %v) @ %vx", v.center.x, v.center.y, v.scale)
+	return fmt.Sprintf("(%v, %v) @ %vx", v.x, v.y, v.scale)
 }
 
 func (v *Viewport) PixelToCartesian(pixelX, pixelY, width, height int) (x, y float64) {
 	x, y = toVector(pixelX, pixelY, width, height)
 	x *= v.scale
 	y *= v.scale
-	x += v.center.x
-	y += v.center.y
+	x += v.x
+	y += v.y
 	return x, y
 }
 
