@@ -4,10 +4,7 @@ import (
 	"fmt"
 )
 
-const (
-	defaultScale  = 0.01
-	zoomIncrement = 0.001
-)
+const defaultScale = 0.01
 
 type Viewport struct {
 	scale  float64
@@ -51,13 +48,13 @@ func (v *Viewport) String() string {
 	return fmt.Sprintf("(%v, %v) @ %vx", v.center.x, v.center.y, v.scale)
 }
 
-func (v *Viewport) PixelToComplex(pixelX, pixelY, width, height int) complex128 {
-	x, y := toVector(pixelX, pixelY, width, height)
+func (v *Viewport) PixelToCartesian(pixelX, pixelY, width, height int) (x, y float64) {
+	x, y = toVector(pixelX, pixelY, width, height)
 	x *= v.scale
 	y *= v.scale
 	x += v.center.x
 	y += v.center.y
-	return complex(x, y)
+	return x, y
 }
 
 func toVector(pixelX, pixelY, width, height int) (x, y float64) {
