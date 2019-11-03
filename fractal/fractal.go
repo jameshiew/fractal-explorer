@@ -11,18 +11,6 @@ import (
 
 const title = "Fractal Explorer"
 
-type viewport struct {
-	canvas fyne.CanvasObject
-}
-
-func (v *viewport) Layout(objects []fyne.CanvasObject, size fyne.Size) {
-	v.canvas.Resize(size)
-}
-
-func (v *viewport) MinSize(objects []fyne.CanvasObject) fyne.Size {
-	return fyne.NewSize(320, 240)
-}
-
 func toCoordinates(px, py, w, h int) (x, y int) {
 	return px - w/2, -py + h/2
 }
