@@ -1,6 +1,8 @@
 package fractal
 
-import "fyne.io/fyne"
+import (
+	"fyne.io/fyne"
+)
 
 const (
 	minWidth  = 320
