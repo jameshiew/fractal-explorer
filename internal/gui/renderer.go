@@ -72,6 +72,18 @@ func (r renderer) Destroy() {
 	// do nothing
 }
 
+// drawSingleThreaded is faster for larger canvases for whatever reason
+func (r *renderer) drawSingleThreaded(width, height int) image.Image {
+	defer r.instrument()()
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
+			img.Set(x, y, r.pixelColorer(x, y, width, height))
+		}
+	}
+	return img
+}
+
 func (r *renderer) draw(width, height int) image.Image {
 	defer r.instrument()()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
