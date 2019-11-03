@@ -22,13 +22,21 @@ func Run() {
 	w.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
 		const zoomFactor = 1.1
 		switch event.Name {
-		case fyne.KeyQ:
-			cnvs.drawer.scale /= zoomFactor
-			widget.Refresh(&cnvs)
+		case fyne.KeyUp:
+			cnvs.drawer.position.y += 1
+		case fyne.KeyLeft:
+			cnvs.drawer.position.x -= 1
+		case fyne.KeyRight:
+			cnvs.drawer.position.x += 1
+		case fyne.KeyDown:
+			cnvs.drawer.position.y -= 1
 		case fyne.KeyW:
+			cnvs.drawer.scale /= zoomFactor
+		case fyne.KeyS:
 			cnvs.drawer.scale *= zoomFactor
-			widget.Refresh(&cnvs)
 		}
+		widget.Refresh(&cnvs)
 	})
+	w.RequestFocus()
 	w.ShowAndRun()
 }
