@@ -1,7 +1,7 @@
 package fractal
 
 import (
-	mandelbrot2 "fractal-explorer/internal/fractal/mandelbrot"
+	mandelbrot2 "fractal-explorer/internal/mandelbrot"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"

@@ -2,7 +2,7 @@ package fractal
 
 import (
 	"fmt"
-	mandelbrot2 "fractal-explorer/internal/fractal/mandelbrot"
+	mandelbrot2 "fractal-explorer/internal/mandelbrot"
 	"image/color"
 )
 
