@@ -4,6 +4,10 @@ import (
 	"fractal-explorer/internal/fractal"
 )
 
+const title = "Fractal Explorer"
+
 func main() {
-	fractal.Run()
+	window := fractal.Window(title)
+	window.RequestFocus()
+	window.ShowAndRun()
 }
