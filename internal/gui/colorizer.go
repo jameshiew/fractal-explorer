@@ -14,6 +14,23 @@ var (
 	blue  = color.RGBA64{B: 65535, A: 65535}
 )
 
+func blend(colors ...color.Color) color.Color {
+	var r, g, b, a uint32
+	for _, c := range colors {
+		cr, cg, cb, ca := c.RGBA()
+		r += cr
+		g += cg
+		b += cb
+		a += ca
+	}
+	return color.RGBA64{
+		R: uint16(r / uint32(len(colors))),
+		G: uint16(g / uint32(len(colors))),
+		B: uint16(b / uint32(len(colors))),
+		A: uint16(a / uint32(len(colors))),
+	}
+}
+
 func forMandelbrot(base color.RGBA64, fractal mandelbrot.Mandelbrot) colorizer {
 	return func(c complex128) color.Color {
 		iter := fractal.IterateWhileNotReachingBound(c)

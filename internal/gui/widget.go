@@ -67,23 +67,6 @@ func (f *fractalWidget) Refresh() {
 	f.labels.info.SetText(f.viewport.String())
 }
 
-func blend(colors ...color.Color) color.Color {
-	var r, g, b, a uint32
-	for _, c := range colors {
-		cr, cg, cb, ca := c.RGBA()
-		r += cr
-		g += cg
-		b += cb
-		a += ca
-	}
-	return color.RGBA64{
-		R: uint16(r / uint32(len(colors))),
-		G: uint16(g / uint32(len(colors))),
-		B: uint16(b / uint32(len(colors))),
-		A: uint16(a / uint32(len(colors))),
-	}
-}
-
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher: f,
