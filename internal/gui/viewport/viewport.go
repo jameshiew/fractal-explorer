@@ -24,8 +24,8 @@ func New(colorer complexColorer) Viewport {
 	}
 }
 func (v *Viewport) Move(deltaX, deltaY float64) {
-	v.center.x += deltaX
-	v.center.y += deltaY
+	v.center.x += deltaX * v.scale
+	v.center.y += deltaY * v.scale
 }
 
 func (v *Viewport) Up() {
@@ -57,7 +57,7 @@ func (v *Viewport) String() string {
 }
 
 func (v *Viewport) PixelColor(pixelX, pixelY, width, height int) color.Color {
-	x, y := ToCartesian(pixelX, pixelY, width, height)
+	x, y := toVector(pixelX, pixelY, width, height)
 	x *= v.scale
 	y *= v.scale
 	x += v.center.x
@@ -66,6 +66,6 @@ func (v *Viewport) PixelColor(pixelX, pixelY, width, height int) color.Color {
 	return v.colorer(c)
 }
 
-func ToCartesian(pixelX, pixelY, width, height int) (x, y float64) {
+func toVector(pixelX, pixelY, width, height int) (x, y float64) {
 	return float64(pixelX - width/2), float64(-pixelY + height/2)
 }
