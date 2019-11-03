@@ -8,6 +8,11 @@ import (
 	"image/color"
 )
 
+const (
+	minWidthPixels  = 320
+	minHeightPixels = 240
+)
+
 type renderer struct {
 	raster   *canvas.Raster
 	objects  []fyne.CanvasObject
