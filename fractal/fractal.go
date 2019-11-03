@@ -4,7 +4,6 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/canvas"
-	"fyne.io/fyne/widget"
 )
 
 const title = "Fractal Explorer"
@@ -29,12 +28,7 @@ func Run() {
 	vp := &viewport{
 		canvas: canvas.NewRasterWithPixels(drwr.pixelColor),
 	}
-	w.SetContent(widget.NewVBox(
-		fyne.NewContainerWithLayout(vp, vp.canvas),
-		widget.NewButton("Quit", func() {
-			app.Quit()
-		}),
-	))
+	w.SetContent(fyne.NewContainerWithLayout(vp, vp.canvas))
 
 	w.ShowAndRun()
 }
