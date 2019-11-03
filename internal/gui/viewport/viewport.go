@@ -23,6 +23,7 @@ func New(colorer complexColorer) Viewport {
 		colorer: colorer,
 	}
 }
+
 func (v *Viewport) Move(deltaX, deltaY float64) {
 	v.center.x += deltaX * v.scale
 	v.center.y += deltaY * v.scale
