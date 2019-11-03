@@ -65,7 +65,7 @@ func (f *fractalCanvas) Hide() {
 }
 
 func (f *fractalCanvas) CreateRenderer() fyne.WidgetRenderer {
-	renderer := &renderer{fractalCanvas: f}
+	renderer := &renderer{canvas: f}
 
 	raster := canvas.NewRaster(renderer.draw)
 	renderer.raster = raster

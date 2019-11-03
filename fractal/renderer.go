@@ -18,7 +18,7 @@ type renderer struct {
 	objects  []fyne.CanvasObject
 	imgCache *image.RGBA
 
-	fractalCanvas *fractalCanvas
+	canvas *fractalCanvas
 }
 
 func (f renderer) Layout(size fyne.Size) {
@@ -30,7 +30,7 @@ func (f renderer) MinSize() fyne.Size {
 }
 
 func (f renderer) Refresh() {
-	f.fractalCanvas.labels.info.SetText(f.fractalCanvas.viewport.String())
+	f.canvas.labels.info.SetText(f.canvas.viewport.String())
 	canvas.Refresh(f.raster)
 }
 
@@ -59,7 +59,7 @@ func (f *renderer) draw(w, h int) image.Image {
 
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			img.Set(x, y, f.fractalCanvas.viewport.pixelColor(x, y, w, h))
+			img.Set(x, y, f.canvas.viewport.pixelColor(x, y, w, h))
 		}
 	}
 	return img
