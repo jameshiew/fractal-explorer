@@ -42,14 +42,11 @@ func Run() {
 		canvas: canvas.NewRasterWithPixels(stubPixelColor),
 	}
 	w.SetContent(widget.NewVBox(
-		widget.NewLabel("Hello Fyne!"),
 		fyne.NewContainerWithLayout(vp, vp.canvas),
 		widget.NewButton("Quit", func() {
 			app.Quit()
 		}),
 	))
-
-	vp.window.Canvas().Refresh(vp.canvas)
 
 	w.ShowAndRun()
 }
