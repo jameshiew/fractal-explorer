@@ -85,7 +85,7 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher: f,
 		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
-			colorer := forMandelbrot(mandelbrot.New(50, 2))
+			colorer := forMandelbrot(mandelbrot.New(500, 2))
 			return colorer(f.viewport.PixelToComplex(pixelX, pixelY, width, height))
 		},
 	}

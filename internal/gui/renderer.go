@@ -20,10 +20,23 @@ type refresher interface {
 	Refresh()
 }
 
+type instrumenter struct {
+	rendered uint
+}
+
+func (i *instrumenter) instrument() (finish func()) {
+	start := time.Now()
+	return func() {
+		duration := time.Since(start)
+		log.Printf("Took %v to render image", duration)
+		i.rendered++
+	}
+}
+
 type renderer struct {
-	raster   *canvas.Raster
-	objects  []fyne.CanvasObject
-	imgCache *image.RGBA
+	instrumenter
+	raster  *canvas.Raster
+	objects []fyne.CanvasObject
 
 	pixelColorer func(pixelX, pixelY, width, height int) color.Color
 	refresher    refresher
@@ -59,17 +72,8 @@ func (f renderer) Destroy() {
 }
 
 func (f *renderer) draw(w, h int) image.Image {
-	start := time.Now()
-	defer func() {
-		duration := time.Since(start)
-		log.Printf("Took %v to render image", duration)
-	}()
-	img := f.imgCache
-	if img == nil || img.Bounds().Size().X != w || img.Bounds().Size().Y != h {
-		img = image.NewRGBA(image.Rect(0, 0, w, h))
-		f.imgCache = img
-	}
-
+	defer f.instrument()()
+	img := image.NewRGBA(image.Rect(0, 0, w, h))
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
 			img.Set(x, y, f.pixelColorer(x, y, w, h))
