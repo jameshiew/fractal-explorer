@@ -75,10 +75,14 @@ func (f renderer) Destroy() {
 func (f *renderer) draw(w, h int) image.Image {
 	defer f.instrument()()
 	img := image.NewRGBA(image.Rect(0, 0, w, h))
+	const nWorkers = 1024
+	jobs := make(chan struct {
+		x, y int
+	}, nWorkers)
 	pixels := make(chan struct {
 		x, y  int
 		color color.Color
-	})
+	}, nWorkers)
 	var wg sync.WaitGroup
 	wg.Add(w * h)
 	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
@@ -90,20 +94,26 @@ func (f *renderer) draw(w, h int) image.Image {
 			}
 		}
 	}()
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
-			go func(x, y int) {
+	for i := 0; i < nWorkers; i++ {
+		go func() {
+			for j := range jobs {
 				pixels <- struct {
 					x, y  int
 					color color.Color
 				}{
-					x:     x,
-					y:     y,
-					color: f.pixelColorer(x, y, w, h),
+					x:     j.x,
+					y:     j.y,
+					color: f.pixelColorer(j.x, j.y, w, h),
 				}
-			}(x, y)
+			}
+		}()
+	}
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			jobs <- struct{ x, y int }{x: x, y: y}
 		}
 	}
+	close(jobs)
 	wg.Wait()
 	return img
 }
