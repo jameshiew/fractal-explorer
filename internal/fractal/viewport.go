@@ -36,12 +36,10 @@ func (v *viewport) Down() {
 
 func (v *viewport) ZoomIn() {
 	v.scale -= zoomIncrement
-
 }
 
 func (v *viewport) ZoomOut() {
 	v.scale += zoomIncrement
-
 }
 
 func (v *viewport) String() string {
