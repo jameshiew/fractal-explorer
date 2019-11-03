@@ -19,10 +19,10 @@ func Test_toCartesian(t *testing.T) {
 		expectedY float64
 	}{
 		{0, 0, -160, 120},
-		{320, 240, 160, -120},
+		{width, height, 160, -120},
 	} {
 		t.Run(fmt.Sprintf("%v, %v", tc.x, tc.y), func(t *testing.T) {
-			x, y := toCartesian(tc.x, tc.y, 320, 240)
+			x, y := ToCartesian(tc.x, tc.y, width, height)
 
 			require.EqualValues(t, tc.expectedX, x)
 			require.EqualValues(t, tc.expectedY, y)

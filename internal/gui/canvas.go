@@ -1,14 +1,32 @@
 package gui
 
 import (
+	"fractal-explorer/internal/gui/viewport"
 	mandelbrot2 "fractal-explorer/internal/mandelbrot"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
+	"image/color"
 )
 
+func forMandelbrot(fractal mandelbrot2.Mandelbrot) func(complex128) color.Color {
+	return func(c complex128) color.Color {
+		iter := fractal.IterateWhileNotReachingBound(c)
+		if iter == fractal.MaxIterations() {
+			return color.Black
+		}
+		scale := float64(iter) / float64(fractal.MaxIterations())
+		return color.RGBA{
+			R: uint8(scale * 255),
+			G: uint8(scale * 100),
+			B: uint8(scale * 100),
+			A: 255,
+		}
+	}
+}
+
 type fractalCanvas struct {
-	viewport viewport
+	viewport viewport.Viewport
 
 	labels struct {
 		info *widget.Label
@@ -20,11 +38,8 @@ type fractalCanvas struct {
 
 func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
-		viewport: viewport{
-			scale:   0.01,
-			colorer: forMandelbrot(mandelbrot2.New(50, 2)),
-		},
-		labels: struct{ info *widget.Label }{info: widget.NewLabel("")},
+		viewport: viewport.New(forMandelbrot(mandelbrot2.New(50, 2))),
+		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
 }
 

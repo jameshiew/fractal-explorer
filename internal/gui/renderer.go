@@ -59,7 +59,7 @@ func (f *renderer) draw(w, h int) image.Image {
 
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			img.Set(x, y, f.canvas.viewport.pixelColor(x, y, w, h))
+			img.Set(x, y, f.canvas.viewport.PixelColor(x, y, w, h))
 		}
 	}
 	return img

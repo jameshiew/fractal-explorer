@@ -7,14 +7,13 @@ import (
 
 func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
 	deltaX, deltaY :=
-		toCartesian(
+		ToCartesian(
 			event.Position.X,
 			event.Position.Y,
 			f.Size().Width,
 			f.Size().Height,
 		)
-	f.viewport.center.x += deltaX * f.viewport.scale
-	f.viewport.center.y += deltaY * f.viewport.scale
+	f.viewport.Move(deltaX, deltaY)
 	widget.Refresh(f)
 }
 
