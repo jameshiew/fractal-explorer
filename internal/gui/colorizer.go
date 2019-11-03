@@ -15,11 +15,11 @@ func forMandelbrot(fractal mandelbrot.Mandelbrot) colorizer {
 			return color.Black
 		}
 		scale := float64(iter) / float64(fractal.MaxIterations())
-		return color.RGBA{
-			R: uint8(scale * 255),
-			G: uint8(scale * 100),
-			B: uint8(scale * 100),
-			A: 255,
+		return color.NRGBA64{
+			R: uint16(scale * 65535),
+			G: uint16(scale * 16000),
+			B: uint16(scale * 16000),
+			A: 65535,
 		}
 	}
 }
