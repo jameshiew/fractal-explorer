@@ -18,7 +18,12 @@ func Run() {
 
 	w := app.NewWindow(title)
 	cnvs := newFractalCanvas()
-	w.SetContent(&cnvs)
+	w.SetContent(
+		widget.NewVBox(
+			&cnvs,
+			cnvs.labels.info,
+		),
+	)
 	w.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
 		const zoomIncrement = 0.001
 		switch event.Name {

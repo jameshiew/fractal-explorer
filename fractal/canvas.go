@@ -9,6 +9,9 @@ import (
 type fractalCanvas struct {
 	viewport viewport
 
+	labels struct {
+		info *widget.Label
+	}
 	hidden   bool
 	size     fyne.Size
 	position fyne.Position
@@ -23,6 +26,7 @@ func newFractalCanvas() fractalCanvas {
 				bound:         2,
 			},
 		},
+		labels: struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
 }
 

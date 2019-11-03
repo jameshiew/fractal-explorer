@@ -25,6 +25,7 @@ func (f renderer) MinSize() fyne.Size {
 }
 
 func (f renderer) Refresh() {
+	f.fractalCanvas.labels.info.SetText(f.fractalCanvas.viewport.String())
 	canvas.Refresh(f.raster)
 }
 

@@ -1,6 +1,9 @@
 package fractal
 
-import "image/color"
+import (
+	"fmt"
+	"image/color"
+)
 
 type viewport struct {
 	scale  float64
@@ -8,6 +11,10 @@ type viewport struct {
 		x, y float64
 	}
 	mandelbrot mandelbrot
+}
+
+func (v *viewport) String() string {
+	return fmt.Sprintf("%v - (%v, %v) @ %vx", v.mandelbrot.String(), v.center.x, v.center.y, v.scale)
 }
 
 func (d *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
