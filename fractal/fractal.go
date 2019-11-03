@@ -14,11 +14,18 @@ func Run() {
 	app := app.New()
 
 	w := app.NewWindow(title)
-	mandel := mandelbrot{
-		maxIterations: 50,
-		bound:         2,
+	drwr := &drawer{
+		scale: struct {
+			x, y float64
+		}{
+			x: 0.01,
+			y: 0.01,
+		},
+		mandelbrot: mandelbrot{
+			maxIterations: 50,
+			bound:         2,
+		},
 	}
-	drwr := &drawer{mandel}
 	vp := &viewport{
 		canvas: canvas.NewRasterWithPixels(drwr.pixelColor),
 	}
