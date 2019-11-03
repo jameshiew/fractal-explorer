@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fractal-explorer/internal/gui"
+	"gitlab.com/jameshiew/fractal-explorer/internal/gui"
 )
 
 const title = "Fractal Explorer"

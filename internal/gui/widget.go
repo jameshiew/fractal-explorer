@@ -1,11 +1,11 @@
 package gui
 
 import (
-	"fractal-explorer/internal/gui/viewport"
-	"fractal-explorer/internal/mandelbrot"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
+	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
+	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
 	"math"
 )

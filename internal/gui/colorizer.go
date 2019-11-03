@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"fractal-explorer/internal/mandelbrot"
+	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
 )
 
