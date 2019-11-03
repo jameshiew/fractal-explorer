@@ -11,7 +11,6 @@ import (
 const title = "Fractal Explorer"
 
 type viewport struct {
-	window fyne.Window
 	canvas fyne.CanvasObject
 }
 
@@ -38,7 +37,6 @@ func Run() {
 
 	w := app.NewWindow(title)
 	vp := &viewport{
-		window: w,
 		canvas: canvas.NewRasterWithPixels(stubPixelColor),
 	}
 	w.SetContent(widget.NewVBox(
