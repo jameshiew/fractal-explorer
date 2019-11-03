@@ -23,25 +23,25 @@ func Run() {
 		const zoomIncrement = 0.001
 		switch event.Name {
 		case fyne.KeyUp:
-			cnvs.drawer.center.y += 1
+			cnvs.viewport.center.y += 1
 		case fyne.KeyLeft:
-			cnvs.drawer.center.x -= 1
+			cnvs.viewport.center.x -= 1
 		case fyne.KeyRight:
-			cnvs.drawer.center.x += 1
+			cnvs.viewport.center.x += 1
 		case fyne.KeyDown:
-			cnvs.drawer.center.y -= 1
+			cnvs.viewport.center.y -= 1
 		case fyne.KeyW:
-			cnvs.drawer.scale -= zoomIncrement
+			cnvs.viewport.scale -= zoomIncrement
 		case fyne.KeyS:
-			cnvs.drawer.scale += zoomIncrement
+			cnvs.viewport.scale += zoomIncrement
 		case fyne.KeyA:
-			cnvs.drawer.mandelbrot.maxIterations--
+			cnvs.viewport.mandelbrot.maxIterations--
 		case fyne.KeyD:
-			cnvs.drawer.mandelbrot.maxIterations++
+			cnvs.viewport.mandelbrot.maxIterations++
 		case fyne.KeyQ:
-			cnvs.drawer.mandelbrot.bound--
+			cnvs.viewport.mandelbrot.bound--
 		case fyne.KeyE:
-			cnvs.drawer.mandelbrot.bound++
+			cnvs.viewport.mandelbrot.bound++
 		}
 		widget.Refresh(&cnvs)
 	})

@@ -7,7 +7,7 @@ import (
 )
 
 type fractalCanvas struct {
-	drawer viewport
+	viewport viewport
 
 	hidden   bool
 	size     fyne.Size
@@ -16,7 +16,7 @@ type fractalCanvas struct {
 
 func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
-		drawer: viewport{
+		viewport: viewport{
 			scale: 0.01,
 			mandelbrot: mandelbrot{
 				maxIterations: 50,

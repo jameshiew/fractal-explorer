@@ -53,7 +53,7 @@ func (f *renderer) draw(w, h int) image.Image {
 
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
-			img.Set(x, y, f.fractalCanvas.drawer.pixelColor(x, y, w, h))
+			img.Set(x, y, f.fractalCanvas.viewport.pixelColor(x, y, w, h))
 		}
 	}
 	return img
