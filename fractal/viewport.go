@@ -2,6 +2,7 @@ package fractal
 
 import (
 	"fmt"
+	"fractal-explorer/fractal/mandelbrot"
 	"image/color"
 )
 
@@ -10,7 +11,7 @@ type viewport struct {
 	center struct {
 		x, y float64
 	}
-	mandelbrot mandelbrot
+	mandelbrot mandelbrot.Mandelbrot
 }
 
 func (v *viewport) String() string {
@@ -24,7 +25,7 @@ func (v *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	x += v.center.x
 	y += v.center.y
 	c := complex(x, y)
-	iter := v.mandelbrot.iterateWhileNotReachingBound(c)
+	iter := v.mandelbrot.IterateWhileNotReachingBound(c)
 	if iter == v.mandelbrot.maxIterations {
 		return color.Black
 	}

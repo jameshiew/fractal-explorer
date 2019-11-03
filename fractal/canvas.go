@@ -1,6 +1,7 @@
 package fractal
 
 import (
+	"fractal-explorer/fractal/mandelbrot"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
@@ -20,11 +21,8 @@ type fractalCanvas struct {
 func newFractalCanvas() fractalCanvas {
 	return fractalCanvas{
 		viewport: viewport{
-			scale: 0.01,
-			mandelbrot: mandelbrot{
-				maxIterations: 50,
-				bound:         2,
-			},
+			scale:      0.01,
+			mandelbrot: mandelbrot.New(50, 2),
 		},
 		labels: struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
