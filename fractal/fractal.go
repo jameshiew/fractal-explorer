@@ -34,6 +34,14 @@ func Run() {
 			cnvs.drawer.scale /= zoomFactor
 		case fyne.KeyS:
 			cnvs.drawer.scale *= zoomFactor
+		case fyne.KeyA:
+			cnvs.drawer.mandelbrot.maxIterations--
+		case fyne.KeyD:
+			cnvs.drawer.mandelbrot.maxIterations++
+		case fyne.KeyQ:
+			cnvs.drawer.mandelbrot.bound--
+		case fyne.KeyE:
+			cnvs.drawer.mandelbrot.bound++
 		}
 		widget.Refresh(&cnvs)
 	})
