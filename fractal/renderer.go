@@ -8,7 +8,7 @@ import (
 	"image/color"
 )
 
-type fractalRenderer struct {
+type renderer struct {
 	raster   *canvas.Raster
 	objects  []fyne.CanvasObject
 	imgCache *image.RGBA
@@ -16,35 +16,35 @@ type fractalRenderer struct {
 	fractalCanvas *fractalCanvas
 }
 
-func (f fractalRenderer) Layout(size fyne.Size) {
+func (f renderer) Layout(size fyne.Size) {
 	f.raster.Resize(size)
 }
 
-func (f fractalRenderer) MinSize() fyne.Size {
+func (f renderer) MinSize() fyne.Size {
 	return fyne.NewSize(minWidthPixels, minHeightPixels)
 }
 
-func (f fractalRenderer) Refresh() {
+func (f renderer) Refresh() {
 	canvas.Refresh(f.raster)
 }
 
-func (f fractalRenderer) ApplyTheme() {
+func (f renderer) ApplyTheme() {
 	// do nothing
 }
 
-func (f fractalRenderer) BackgroundColor() color.Color {
+func (f renderer) BackgroundColor() color.Color {
 	return theme.BackgroundColor()
 }
 
-func (f fractalRenderer) Objects() []fyne.CanvasObject {
+func (f renderer) Objects() []fyne.CanvasObject {
 	return f.objects
 }
 
-func (f fractalRenderer) Destroy() {
+func (f renderer) Destroy() {
 	// do nothing
 }
 
-func (f *fractalRenderer) draw(w, h int) image.Image {
+func (f *renderer) draw(w, h int) image.Image {
 	img := f.imgCache
 	if img == nil || img.Bounds().Size().X != w || img.Bounds().Size().Y != h {
 		img = image.NewRGBA(image.Rect(0, 0, w, h))
