@@ -7,6 +7,7 @@ import (
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 	"image/color"
+	"math"
 )
 
 type fractalWidget struct {
@@ -83,8 +84,19 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
 			z := complex(x, y)
 			return blend(
-				forMandelbrot(green, mandelbrot.New(75, 2))(z),
-				forMandelbrot(blue, mandelbrot.New(90, 2))(z),
+				forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
+				forMandelbrot(color.RGBA64{
+					R: 20000,
+					G: 50000,
+					B: 20000,
+					A: 65535,
+				}, mandelbrot.New(100, math.E))(z),
+				forMandelbrot(color.RGBA64{
+					R: 16000,
+					G: 65335,
+					B: 16000,
+					A: 65535,
+				}, mandelbrot.New(75, math.Pi))(z),
 			)
 		},
 	}
