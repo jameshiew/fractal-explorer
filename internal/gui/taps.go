@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/widget"
 )
 
-func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
+func (f *fractalWidget) Tapped(event *fyne.PointEvent) {
 	deltaX, deltaY :=
 		ToCartesian(
 			event.Position.X,
@@ -17,6 +17,6 @@ func (f *fractalCanvas) Tapped(event *fyne.PointEvent) {
 	widget.Refresh(f)
 }
 
-func (f *fractalCanvas) TappedSecondary(*fyne.PointEvent) {
+func (f *fractalWidget) TappedSecondary(*fyne.PointEvent) {
 	// do nothing
 }

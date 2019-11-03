@@ -25,7 +25,7 @@ func forMandelbrot(fractal mandelbrot2.Mandelbrot) func(complex128) color.Color 
 	}
 }
 
-type fractalCanvas struct {
+type fractalWidget struct {
 	viewport viewport.Viewport
 
 	labels struct {
@@ -36,52 +36,52 @@ type fractalCanvas struct {
 	position fyne.Position
 }
 
-func newFractalCanvas() fractalCanvas {
-	return fractalCanvas{
+func newFractalCanvas() fractalWidget {
+	return fractalWidget{
 		viewport: viewport.New(forMandelbrot(mandelbrot2.New(50, 2))),
 		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
 	}
 }
 
-func (f *fractalCanvas) Size() fyne.Size {
+func (f *fractalWidget) Size() fyne.Size {
 	return f.size
 }
 
-func (f *fractalCanvas) Resize(size fyne.Size) {
+func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
 	widget.Renderer(f).Layout(size)
 }
 
-func (f *fractalCanvas) Position() fyne.Position {
+func (f *fractalWidget) Position() fyne.Position {
 	return f.position
 }
 
-func (f *fractalCanvas) Move(position fyne.Position) {
+func (f *fractalWidget) Move(position fyne.Position) {
 	f.position = position
 	widget.Renderer(f).Layout(f.size)
 }
 
-func (f *fractalCanvas) MinSize() fyne.Size {
+func (f *fractalWidget) MinSize() fyne.Size {
 	return widget.Renderer(f).MinSize()
 }
 
-func (f *fractalCanvas) Visible() bool {
+func (f *fractalWidget) Visible() bool {
 	return !f.hidden
 }
 
-func (f *fractalCanvas) Show() {
+func (f *fractalWidget) Show() {
 	f.hidden = false
 }
 
-func (f *fractalCanvas) Hide() {
+func (f *fractalWidget) Hide() {
 	f.hidden = true
 }
 
-func (f *fractalCanvas) Refresh() {
+func (f *fractalWidget) Refresh() {
 	f.labels.info.SetText(f.viewport.String())
 }
 
-func (f *fractalCanvas) CreateRenderer() fyne.WidgetRenderer {
+func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher:    f,
 		pixelColorer: f.viewport.PixelColor,
