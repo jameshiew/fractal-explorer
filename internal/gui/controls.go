@@ -7,8 +7,7 @@ type controllable interface {
 	Left()
 	Right()
 	Down()
-	ZoomIn()
-	ZoomOut()
+	Zoom(factor float64)
 }
 
 func controllerFor(controllable controllable) func(*fyne.KeyEvent) {
@@ -23,9 +22,9 @@ func controllerFor(controllable controllable) func(*fyne.KeyEvent) {
 		case fyne.KeyDown:
 			controllable.Down()
 		case fyne.KeyW:
-			controllable.ZoomIn()
+			controllable.Zoom(0.5)
 		case fyne.KeyS:
-			controllable.ZoomOut()
+			controllable.Zoom(2)
 		}
 	}
 }

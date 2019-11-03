@@ -43,12 +43,8 @@ func (v *Viewport) Down() {
 	v.center.y--
 }
 
-func (v *Viewport) ZoomIn() {
-	v.scale -= zoomIncrement
-}
-
-func (v *Viewport) ZoomOut() {
-	v.scale += zoomIncrement
+func (v *Viewport) Zoom(factor float64) {
+	v.scale *= factor
 }
 
 func (v *Viewport) String() string {
