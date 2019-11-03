@@ -18,7 +18,9 @@ func (v *viewport) String() string {
 }
 
 func (d *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
-	x, y := d.toCartesian(pixelX, pixelY, width, height)
+	x, y := toCartesian(pixelX, pixelY, width, height)
+	x += d.center.x
+	y += d.center.y
 	c := complex(x*d.scale, y*d.scale)
 	iter := d.mandelbrot.iterateWhileNotReachingBound(c)
 	if iter == d.mandelbrot.maxIterations {
@@ -33,6 +35,6 @@ func (d *viewport) pixelColor(pixelX, pixelY, width, height int) color.Color {
 	}
 }
 
-func (d *viewport) toCartesian(pixelX, pixelY, width, height int) (x, y float64) {
-	return d.center.x + float64(pixelX-width/2), d.center.y + float64(-pixelY+height/2)
+func toCartesian(pixelX, pixelY, width, height int) (x, y float64) {
+	return float64(pixelX - width/2), float64(-pixelY + height/2)
 }
