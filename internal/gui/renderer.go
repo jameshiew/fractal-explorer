@@ -6,6 +6,8 @@ import (
 	"fyne.io/fyne/theme"
 	"image"
 	"image/color"
+	"log"
+	"time"
 )
 
 const (
@@ -57,6 +59,11 @@ func (f renderer) Destroy() {
 }
 
 func (f *renderer) draw(w, h int) image.Image {
+	start := time.Now()
+	defer func() {
+		duration := time.Since(start)
+		log.Printf("Took %v to render image", duration)
+	}()
 	img := f.imgCache
 	if img == nil || img.Bounds().Size().X != w || img.Bounds().Size().Y != h {
 		img = image.NewRGBA(image.Rect(0, 0, w, h))
