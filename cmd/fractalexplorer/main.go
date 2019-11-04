@@ -7,7 +7,5 @@ import (
 const title = "Fractal Explorer"
 
 func main() {
-	window := gui.Window(title)
-	window.RequestFocus()
-	window.ShowAndRun()
+	gui.Run(title)
 }

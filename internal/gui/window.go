@@ -7,14 +7,8 @@ import (
 	"fyne.io/fyne/widget"
 )
 
-// Window gets a window containing the GUI
-func Window(title string) fyne.Window {
+func setUpWindow(title string) fyne.Window {
 	window := app.New().NewWindow(title)
-	setUpWindow(window)
-	return window
-}
-
-func setUpWindow(window fyne.Window) {
 	cnvs := newFractalWidget()
 	window.SetContent(
 		fyne.NewContainerWithLayout(
@@ -28,4 +22,5 @@ func setUpWindow(window fyne.Window) {
 		ctrlr(event)
 		widget.Refresh(&cnvs)
 	})
+	return window
 }
