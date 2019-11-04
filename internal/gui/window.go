@@ -9,18 +9,18 @@ import (
 
 func setUpWindow(title string) fyne.Window {
 	window := app.New().NewWindow(title)
-	cnvs := newFractalWidget()
+	wdgt := newFractalWidget()
 	window.SetContent(
 		fyne.NewContainerWithLayout(
 			layout.NewMaxLayout(),
-			&cnvs,
-			cnvs.labels.info,
+			&wdgt,
+			wdgt.labels.info,
 		),
 	)
-	ctrlr := controllerFor(&cnvs.viewport)
+	ctrlr := controllerFor(&wdgt.viewport)
 	window.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
 		ctrlr(event)
-		widget.Refresh(&cnvs)
+		widget.Refresh(&wdgt)
 	})
 	return window
 }
