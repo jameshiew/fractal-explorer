@@ -4,7 +4,6 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/layout"
-	"fyne.io/fyne/widget"
 )
 
 func setUpWindow(title string) fyne.Window {
@@ -17,10 +16,6 @@ func setUpWindow(title string) fyne.Window {
 			wdgt.labels.info,
 		),
 	)
-	ctrlr := controllerFor(&wdgt.viewport)
-	window.Canvas().SetOnTypedKey(func(event *fyne.KeyEvent) {
-		ctrlr(event)
-		widget.Refresh(&wdgt)
-	})
+	window.Canvas().SetOnTypedKey(wdgt.controllerFunc())
 	return window
 }
