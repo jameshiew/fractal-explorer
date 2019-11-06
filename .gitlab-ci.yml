@@ -19,7 +19,7 @@ docker build:
 
 build:
   image: golang:1.13.4-buster
-  stage: build
+  stage: Build binaries
   script:
     - apt update
     - apt install -y xorg-dev libglu1-mesa-dev
