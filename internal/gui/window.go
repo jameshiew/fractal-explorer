@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/layout"
 )
 
-func setUpWindow(window fyne.Window, wdgt fractalWidget) {
+func layoutWindow(window fyne.Window, wdgt fractalWidget) {
 	window.SetContent(
 		fyne.NewContainerWithLayout(
 			layout.NewMaxLayout(),

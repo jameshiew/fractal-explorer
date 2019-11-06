@@ -6,7 +6,7 @@ import "fyne.io/fyne/app"
 func Run(title string) {
 	window := app.New().NewWindow(title)
 	wdgt := newFractalWidget()
-	setUpWindow(window, wdgt)
+	layoutWindow(window, wdgt)
 	window.RequestFocus()
 	window.ShowAndRun()
 }
