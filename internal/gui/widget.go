@@ -80,27 +80,31 @@ func darkBlend(z complex128) color.Color {
 	)
 }
 
+func otherBlend(z complex128) color.Color {
+	return blend(
+		forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
+		forMandelbrot(color.RGBA64{
+			R: 20000,
+			G: 50000,
+			B: 20000,
+			A: 65535,
+		}, mandelbrot.New(100, math.E))(z),
+		forMandelbrot(color.RGBA64{
+			R: 16000,
+			G: 65335,
+			B: 16000,
+			A: 65535,
+		}, mandelbrot.New(75, math.Pi))(z),
+	)
+}
+
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
 		refresher: f,
 		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
 			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
 			z := complex(x, y)
-			return blend(
-				forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
-				forMandelbrot(color.RGBA64{
-					R: 20000,
-					G: 50000,
-					B: 20000,
-					A: 65535,
-				}, mandelbrot.New(100, math.E))(z),
-				forMandelbrot(color.RGBA64{
-					R: 16000,
-					G: 65335,
-					B: 16000,
-					A: 65535,
-				}, mandelbrot.New(75, math.Pi))(z),
-			)
+			return forMandelbrot(green, mandelbrot.New(70, 2))(z)
 		},
 	}
 
