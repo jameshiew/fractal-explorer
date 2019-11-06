@@ -1,4 +1,5 @@
-package gui
+// Package draw is for drawing images of fractals
+package draw
 
 import (
 	"image"
@@ -24,6 +25,14 @@ func (i *drawerInstrumenter) instrument(nPixels int) (finish func()) {
 type drawer struct {
 	drawerInstrumenter
 	pixelColorer func(pixelX, pixelY, width, height int) color.Color
+}
+
+// New returns a new drawing function that uses the passed pixel colorer func
+func New(pixelColorer func(pixelX, pixelY, width, height int) color.Color) func(width, height int) image.Image {
+	drwr := &drawer{
+		pixelColorer: pixelColorer,
+	}
+	return drwr.draw
 }
 
 // drawSingleThreaded is faster for larger canvases for whatever reason

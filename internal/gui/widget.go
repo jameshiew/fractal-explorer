@@ -4,6 +4,7 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
+	"gitlab.com/jameshiew/fractal-explorer/internal/draw"
 	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
@@ -75,14 +76,11 @@ func (f *fractalWidget) refresh() {
 }
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
-	drwr := drawer{
-		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
-			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
-			z := complex(x, y)
-			return forMandelbrot(green, mandelbrot.New(70, 2))(z)
-		},
-	}
-	raster := canvas.NewRaster(drwr.draw)
+	raster := canvas.NewRaster(draw.New(func(pixelX, pixelY, width, height int) color.Color {
+		x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
+		z := complex(x, y)
+		return forMandelbrot(green, mandelbrot.New(70, 2))(z)
+	}))
 	renderer := &widgetRenderer{
 		onRefresh: func() {
 			f.refresh()
