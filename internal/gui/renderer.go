@@ -30,12 +30,16 @@ func (i *instrumenter) instrument(nPixels int) (finish func()) {
 }
 
 type widgetRenderer struct {
-	instrumenter
-	raster  *canvas.Raster
-	objects []fyne.CanvasObject
+	raster    *canvas.Raster
+	objects   []fyne.CanvasObject
+	onRefresh func()
 
+	drawer drawer
+}
+
+type drawer struct {
+	instrumenter
 	pixelColorer func(pixelX, pixelY, width, height int) color.Color
-	onRefresh    func()
 }
 
 func (w widgetRenderer) Layout(size fyne.Size) {
@@ -68,21 +72,21 @@ func (w widgetRenderer) Destroy() {
 }
 
 // drawSingleThreaded is faster for larger canvases for whatever reason
-func (w *widgetRenderer) drawSingleThreaded(width, height int) image.Image {
+func (d *drawer) drawSingleThreaded(width, height int) image.Image {
 	nPixels := width * height
-	defer w.instrument(nPixels)()
+	defer d.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			img.Set(x, y, w.pixelColorer(x, y, width, height))
+			img.Set(x, y, d.pixelColorer(x, y, width, height))
 		}
 	}
 	return img
 }
 
-func (w *widgetRenderer) draw(width, height int) image.Image {
+func (d *drawer) draw(width, height int) image.Image {
 	nPixels := width * height
-	defer w.instrument(nPixels)()
+	defer d.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	const nWorkers = 1024
 	jobs := make(chan struct {
@@ -112,7 +116,7 @@ func (w *widgetRenderer) draw(width, height int) image.Image {
 				}{
 					x:     j.x,
 					y:     j.y,
-					color: w.pixelColorer(j.x, j.y, width, height),
+					color: d.pixelColorer(j.x, j.y, width, height),
 				}
 			}
 		}()
