@@ -7,7 +7,6 @@ import (
 	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
-	"math"
 )
 
 type hideable struct {
@@ -73,33 +72,6 @@ func (f *fractalWidget) MinSize() fyne.Size {
 
 func (f *fractalWidget) refresh() {
 	f.info.SetText(f.viewport.String())
-}
-
-// darkBlend is quite dark
-func darkBlend(z complex128) color.Color {
-	return blend(
-		forMandelbrot(green, mandelbrot.New(125, 2))(z),
-		forMandelbrot(blue, mandelbrot.New(250, 2))(z),
-		forMandelbrot(red, mandelbrot.New(500, 2))(z),
-	)
-}
-
-func otherBlend(z complex128) color.Color {
-	return blend(
-		forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
-		forMandelbrot(color.RGBA64{
-			R: 20000,
-			G: 50000,
-			B: 20000,
-			A: 65535,
-		}, mandelbrot.New(100, math.E))(z),
-		forMandelbrot(color.RGBA64{
-			R: 16000,
-			G: 65335,
-			B: 16000,
-			A: 65535,
-		}, mandelbrot.New(75, math.Pi))(z),
-	)
 }
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {

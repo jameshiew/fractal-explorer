@@ -3,6 +3,7 @@ package gui
 import (
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
+	"math"
 )
 
 // colorizers color complex numbers
@@ -13,6 +14,33 @@ var (
 	green = color.RGBA64{G: 65535, A: 65535}
 	blue  = color.RGBA64{B: 65535, A: 65535}
 )
+
+// darkBlend is quite dark
+func darkBlend(z complex128) color.Color {
+	return blend(
+		forMandelbrot(green, mandelbrot.New(125, 2))(z),
+		forMandelbrot(blue, mandelbrot.New(250, 2))(z),
+		forMandelbrot(red, mandelbrot.New(500, 2))(z),
+	)
+}
+
+func otherBlend(z complex128) color.Color {
+	return blend(
+		forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
+		forMandelbrot(color.RGBA64{
+			R: 20000,
+			G: 50000,
+			B: 20000,
+			A: 65535,
+		}, mandelbrot.New(100, math.E))(z),
+		forMandelbrot(color.RGBA64{
+			R: 16000,
+			G: 65335,
+			B: 16000,
+			A: 65535,
+		}, mandelbrot.New(75, math.Pi))(z),
+	)
+}
 
 func blend(colors ...color.Color) color.Color {
 	var r, g, b, a uint32
