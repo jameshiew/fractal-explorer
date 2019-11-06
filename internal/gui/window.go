@@ -10,7 +10,7 @@ func setUpWindow(window fyne.Window, wdgt fractalWidget) {
 		fyne.NewContainerWithLayout(
 			layout.NewMaxLayout(),
 			&wdgt,
-			wdgt.labels.info,
+			wdgt.InfoLabel(),
 		),
 	)
 	window.Canvas().SetOnTypedKey(wdgt.controllerFunc())

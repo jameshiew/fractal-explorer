@@ -13,18 +13,21 @@ import (
 type fractalWidget struct {
 	viewport viewport.Viewport
 
-	labels struct {
-		info *widget.Label
-	}
+	info     *widget.Label
 	hidden   bool
 	size     fyne.Size
 	position fyne.Position
 }
 
+// InfoLabel returns a label which is updated with the information for this fractal widget
+func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
+	return f.info
+}
+
 func newFractalWidget() fractalWidget {
 	wdgt := fractalWidget{
 		viewport: viewport.New(),
-		labels:   struct{ info *widget.Label }{info: widget.NewLabel("")},
+		info:     widget.NewLabel(""),
 	}
 	wdgt.Refresh()
 	return wdgt
@@ -65,7 +68,7 @@ func (f *fractalWidget) Hide() {
 }
 
 func (f *fractalWidget) Refresh() {
-	f.labels.info.SetText(f.viewport.String())
+	f.info.SetText(f.viewport.String())
 }
 
 // darkBlend is quite dark
