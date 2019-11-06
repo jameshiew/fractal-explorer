@@ -19,11 +19,9 @@ docker build:
       - build/ci/Dockerfile
 
 build:
-  image: golang:1.13.4-buster
+  image: $CI_REGISTRY_IMAGE:latest
   stage: Build binaries
   script:
-    - apt update
-    - apt install -y xorg-dev libglu1-mesa-dev
     - go mod download
     - go build -v ./cmd/fractalexplorer
   artifacts:
