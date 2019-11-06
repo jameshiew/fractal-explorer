@@ -10,11 +10,27 @@ import (
 	"math"
 )
 
+type hideable struct {
+	hidden bool
+}
+
+func (h *hideable) Visible() bool {
+	return !h.hidden
+}
+
+func (h *hideable) Show() {
+	h.hidden = false
+}
+
+func (h *hideable) Hide() {
+	h.hidden = true
+}
+
 type fractalWidget struct {
+	hideable
 	viewport viewport.Viewport
 
 	info     *widget.Label
-	hidden   bool
 	size     fyne.Size
 	position fyne.Position
 }
@@ -53,18 +69,6 @@ func (f *fractalWidget) Move(position fyne.Position) {
 
 func (f *fractalWidget) MinSize() fyne.Size {
 	return widget.Renderer(f).MinSize()
-}
-
-func (f *fractalWidget) Visible() bool {
-	return !f.hidden
-}
-
-func (f *fractalWidget) Show() {
-	f.hidden = false
-}
-
-func (f *fractalWidget) Hide() {
-	f.hidden = true
 }
 
 func (f *fractalWidget) refresh() {
