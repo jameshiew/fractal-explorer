@@ -6,10 +6,13 @@ import (
 
 const defaultScale = 0.01
 
+// Viewport is a view into a Cartesian plane
 type Viewport struct {
-	scale, x, y float64
+	scale float64
+	x, y  float64 // location
 }
 
+// New constructs a new Viewport with the default scale
 func New() Viewport {
 	return Viewport{
 		scale: defaultScale,
