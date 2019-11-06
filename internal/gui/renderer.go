@@ -29,7 +29,7 @@ func (i *instrumenter) instrument(nPixels int) (finish func()) {
 	}
 }
 
-type renderer struct {
+type widgetRenderer struct {
 	instrumenter
 	raster  *canvas.Raster
 	objects []fyne.CanvasObject
@@ -38,51 +38,51 @@ type renderer struct {
 	onRefresh    func()
 }
 
-func (r renderer) Layout(size fyne.Size) {
-	r.raster.Resize(size)
+func (w widgetRenderer) Layout(size fyne.Size) {
+	w.raster.Resize(size)
 }
 
-func (r renderer) MinSize() fyne.Size {
+func (w widgetRenderer) MinSize() fyne.Size {
 	return fyne.NewSize(minWidthPixels, minHeightPixels)
 }
 
-func (r renderer) Refresh() {
-	r.onRefresh()
-	canvas.Refresh(r.raster)
+func (w widgetRenderer) Refresh() {
+	w.onRefresh()
+	canvas.Refresh(w.raster)
 }
 
-func (r renderer) ApplyTheme() {
+func (w widgetRenderer) ApplyTheme() {
 	// do nothing
 }
 
-func (r renderer) BackgroundColor() color.Color {
+func (w widgetRenderer) BackgroundColor() color.Color {
 	return theme.BackgroundColor()
 }
 
-func (r renderer) Objects() []fyne.CanvasObject {
-	return r.objects
+func (w widgetRenderer) Objects() []fyne.CanvasObject {
+	return w.objects
 }
 
-func (r renderer) Destroy() {
+func (w widgetRenderer) Destroy() {
 	// do nothing
 }
 
 // drawSingleThreaded is faster for larger canvases for whatever reason
-func (r *renderer) drawSingleThreaded(width, height int) image.Image {
+func (w *widgetRenderer) drawSingleThreaded(width, height int) image.Image {
 	nPixels := width * height
-	defer r.instrument(nPixels)()
+	defer w.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			img.Set(x, y, r.pixelColorer(x, y, width, height))
+			img.Set(x, y, w.pixelColorer(x, y, width, height))
 		}
 	}
 	return img
 }
 
-func (r *renderer) draw(width, height int) image.Image {
+func (w *widgetRenderer) draw(width, height int) image.Image {
 	nPixels := width * height
-	defer r.instrument(nPixels)()
+	defer w.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	const nWorkers = 1024
 	jobs := make(chan struct {
@@ -112,7 +112,7 @@ func (r *renderer) draw(width, height int) image.Image {
 				}{
 					x:     j.x,
 					y:     j.y,
-					color: r.pixelColorer(j.x, j.y, width, height),
+					color: w.pixelColorer(j.x, j.y, width, height),
 				}
 			}
 		}()

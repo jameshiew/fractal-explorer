@@ -75,7 +75,7 @@ func (f *fractalWidget) refresh() {
 }
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
-	renderer := &renderer{
+	renderer := &widgetRenderer{
 		onRefresh: func() {
 			f.refresh()
 		},
