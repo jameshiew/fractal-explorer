@@ -29,7 +29,7 @@ func newFractalWidget() fractalWidget {
 		viewport: viewport.New(),
 		info:     widget.NewLabel(""),
 	}
-	wdgt.Refresh()
+	wdgt.refresh()
 	return wdgt
 }
 
@@ -67,7 +67,7 @@ func (f *fractalWidget) Hide() {
 	f.hidden = true
 }
 
-func (f *fractalWidget) Refresh() {
+func (f *fractalWidget) refresh() {
 	f.info.SetText(f.viewport.String())
 }
 
@@ -100,7 +100,9 @@ func otherBlend(z complex128) color.Color {
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	renderer := &renderer{
-		refresher: f,
+		onRefresh: func() {
+			f.refresh()
+		},
 		pixelColorer: func(pixelX, pixelY, width, height int) color.Color {
 			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
 			z := complex(x, y)

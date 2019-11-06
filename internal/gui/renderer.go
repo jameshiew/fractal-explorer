@@ -16,11 +16,6 @@ const (
 	minHeightPixels = 240
 )
 
-// refresher implementations provide a callback for when they should be refreshed
-type refresher interface {
-	Refresh()
-}
-
 type instrumenter struct {
 	rendered uint
 }
@@ -40,7 +35,7 @@ type renderer struct {
 	objects []fyne.CanvasObject
 
 	pixelColorer func(pixelX, pixelY, width, height int) color.Color
-	refresher    refresher
+	onRefresh    func()
 }
 
 func (r renderer) Layout(size fyne.Size) {
@@ -52,7 +47,7 @@ func (r renderer) MinSize() fyne.Size {
 }
 
 func (r renderer) Refresh() {
-	r.refresher.Refresh()
+	r.onRefresh()
 	canvas.Refresh(r.raster)
 }
 
