@@ -6,8 +6,10 @@ build:
   image: golang:1.13.4-buster
   stage: build
   script:
+    - apt update
+    - apt install -y xorg-dev libglu1-mesa-dev
     - go mod download
-    - go build ./cmd/fractalexplorer
+    - go build -v ./cmd/fractalexplorer
   artifacts:
     paths:
-      - main
+      - fractalexplorer
