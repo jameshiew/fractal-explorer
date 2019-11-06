@@ -25,19 +25,19 @@ func (v *Viewport) Move(deltaX, deltaY float64) {
 }
 
 func (v *Viewport) Up() {
-	v.y++
+	v.Move(0, 1)
 }
 
 func (v *Viewport) Left() {
-	v.x--
+	v.Move(-1, 0)
 }
 
 func (v *Viewport) Right() {
-	v.x++
+	v.Move(1, 0)
 }
 
 func (v *Viewport) Down() {
-	v.y--
+	v.Move(0, -1)
 }
 
 func (v *Viewport) Zoom(factor float64) {
