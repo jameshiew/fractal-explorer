@@ -1,6 +1,7 @@
 package gui
 
 import (
+	"fmt"
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
@@ -8,6 +9,7 @@ import (
 	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 	"image/color"
+	"log"
 )
 
 type fractalWidget struct {
@@ -39,7 +41,9 @@ func (f *fractalWidget) Size() fyne.Size {
 
 func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
+	log.Printf("Resized to %v\n", size)
 	widget.Renderer(f).Layout(size)
+	f.refresh()
 }
 
 func (f *fractalWidget) Position() fyne.Position {
@@ -49,14 +53,19 @@ func (f *fractalWidget) Position() fyne.Position {
 func (f *fractalWidget) Move(position fyne.Position) {
 	f.position = position
 	widget.Renderer(f).Layout(f.size)
+	f.refresh()
 }
 
 func (f *fractalWidget) MinSize() fyne.Size {
 	return widget.Renderer(f).MinSize()
 }
 
+func (f *fractalWidget) String() string {
+	return fmt.Sprintf("%v - ", f.Size()) + f.viewport.String()
+}
+
 func (f *fractalWidget) refresh() {
-	f.info.SetText(f.viewport.String())
+	f.info.SetText(f.String())
 }
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
