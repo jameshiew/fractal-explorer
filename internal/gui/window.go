@@ -6,12 +6,9 @@ import (
 )
 
 func layoutWindow(window fyne.Window, wdgt fractalWidget) {
-	window.SetContent(
-		fyne.NewContainerWithLayout(
-			layout.NewMaxLayout(),
-			&wdgt,
-			wdgt.InfoLabel(),
-		),
-	)
+	container := fyne.NewContainerWithLayout(layout.NewMaxLayout())
+	container.AddObject(&wdgt)
+	container.AddObject(wdgt.InfoLabel())
+	window.SetContent(container)
 	window.Canvas().SetOnTypedKey(wdgt.controllerFunc())
 }
