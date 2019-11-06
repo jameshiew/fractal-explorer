@@ -2,13 +2,10 @@ package gui
 
 import (
 	"fyne.io/fyne"
-	"fyne.io/fyne/app"
 	"fyne.io/fyne/layout"
 )
 
-func setUpWindow(title string) fyne.Window {
-	window := app.New().NewWindow(title)
-	wdgt := newFractalWidget()
+func setUpWindow(window fyne.Window, wdgt fractalWidget) {
 	window.SetContent(
 		fyne.NewContainerWithLayout(
 			layout.NewMaxLayout(),
@@ -17,5 +14,4 @@ func setUpWindow(title string) fyne.Window {
 		),
 	)
 	window.Canvas().SetOnTypedKey(wdgt.controllerFunc())
-	return window
 }
