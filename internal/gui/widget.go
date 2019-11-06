@@ -43,7 +43,7 @@ func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
 	log.Printf("Resized to %v\n", size)
 	widget.Renderer(f).Layout(size)
-	f.refresh()
+	widget.Renderer(f).Refresh()
 }
 
 func (f *fractalWidget) Position() fyne.Position {
@@ -53,7 +53,7 @@ func (f *fractalWidget) Position() fyne.Position {
 func (f *fractalWidget) Move(position fyne.Position) {
 	f.position = position
 	widget.Renderer(f).Layout(f.size)
-	f.refresh()
+	widget.Renderer(f).Refresh()
 }
 
 func (f *fractalWidget) MinSize() fyne.Size {
