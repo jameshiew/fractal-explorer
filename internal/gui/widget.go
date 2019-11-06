@@ -12,11 +12,11 @@ import (
 
 type fractalWidget struct {
 	hideable
-	viewport viewport.Viewport
-
-	info     *widget.Label
 	size     fyne.Size
 	position fyne.Position
+
+	viewport viewport.Viewport
+	info     *widget.Label
 }
 
 // InfoLabel returns a label which is updated with the information for this fractal widget
