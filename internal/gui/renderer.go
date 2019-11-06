@@ -18,6 +18,14 @@ type widgetRenderer struct {
 	onRefresh func()
 }
 
+func newWidgetRenderer(raster *canvas.Raster, onRefresh func()) widgetRenderer {
+	return widgetRenderer{
+		raster:    raster,
+		objects:   []fyne.CanvasObject{raster},
+		onRefresh: onRefresh,
+	}
+}
+
 func (w widgetRenderer) Layout(size fyne.Size) {
 	w.raster.Resize(size)
 }

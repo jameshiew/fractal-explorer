@@ -65,14 +65,5 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 		z := complex(x, y)
 		return forMandelbrot(green, mandelbrot.New(70, 2))(z)
 	}))
-	renderer := &widgetRenderer{
-		onRefresh: func() {
-			f.refresh()
-		},
-		raster:  raster,
-		objects: []fyne.CanvasObject{raster},
-	}
-	renderer.ApplyTheme()
-
-	return renderer
+	return newWidgetRenderer(raster, f.refresh)
 }
