@@ -18,27 +18,27 @@ var (
 // darkBlend is quite dark
 func darkBlend(z complex128) color.Color {
 	return blend(
-		forMandelbrot(green, mandelbrot.New(125, 2))(z),
-		forMandelbrot(blue, mandelbrot.New(250, 2))(z),
-		forMandelbrot(red, mandelbrot.New(500, 2))(z),
+		forMandelbrot(green, mandelbrot.NewImageBuilder().SetMaxIterations(125).Build())(z),
+		forMandelbrot(blue, mandelbrot.NewImageBuilder().SetMaxIterations(250).Build())(z),
+		forMandelbrot(red, mandelbrot.NewImageBuilder().SetMaxIterations(500).Build())(z),
 	)
 }
 
 func otherBlend(z complex128) color.Color {
 	return blend(
-		forMandelbrot(green, mandelbrot.New(120, math.Phi))(z),
+		forMandelbrot(green, mandelbrot.NewImageBuilder().SetMaxIterations(120).SetBound(math.Phi).Build())(z),
 		forMandelbrot(color.RGBA64{
 			R: 20000,
 			G: 50000,
 			B: 20000,
 			A: 65535,
-		}, mandelbrot.New(100, math.E))(z),
+		}, mandelbrot.NewImageBuilder().SetMaxIterations(100).SetBound(math.E).Build())(z),
 		forMandelbrot(color.RGBA64{
 			R: 16000,
 			G: 65335,
 			B: 16000,
 			A: 65535,
-		}, mandelbrot.New(75, math.Pi))(z),
+		}, mandelbrot.NewImageBuilder().SetMaxIterations(75).SetBound(math.Pi).Build())(z),
 	)
 }
 
@@ -59,7 +59,7 @@ func blend(colors ...color.Color) color.Color {
 	}
 }
 
-func forMandelbrot(base color.Color, fractal mandelbrot.Mandelbrot) colorizer {
+func forMandelbrot(base color.Color, fractal mandelbrot.Image) colorizer {
 	return func(c complex128) color.Color {
 		iter := fractal.IterateWhileNotReachingBound(c)
 		if iter == fractal.MaxIterations() {
