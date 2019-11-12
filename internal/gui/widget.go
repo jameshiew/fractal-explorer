@@ -2,16 +2,12 @@ package gui
 
 import (
 	"fmt"
-	"image/color"
 	"log"
 
 	"fyne.io/fyne"
-	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 
 	"gitlab.com/jameshiew/fractal-explorer/internal/cartesian"
-	"gitlab.com/jameshiew/fractal-explorer/internal/draw"
-	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 )
 
 type fractalWidget struct {
@@ -21,11 +17,6 @@ type fractalWidget struct {
 
 	viewport cartesian.Viewport
 	info     *widget.Label
-}
-
-// InfoLabel returns a label which is updated with the information for this fractal widget
-func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
-	return f.info
 }
 
 func newFractalWidget() fractalWidget {
@@ -66,15 +57,11 @@ func (f *fractalWidget) String() string {
 	return fmt.Sprintf("%v - ", f.Size()) + f.viewport.String()
 }
 
-func (f *fractalWidget) refresh() {
-	f.info.SetText(f.String())
+// InfoLabel returns a label which is updated with the information for this fractal widget
+func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
+	return f.info
 }
 
-func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
-	raster := canvas.NewRaster(draw.New(func(pixelX, pixelY, width, height int) color.Color {
-		x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
-		z := complex(x, y)
-		return draw.NewColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
-	}))
-	return newWidgetRenderer(raster, f.refresh)
+func (f *fractalWidget) refresh() {
+	f.info.SetText(f.String())
 }
