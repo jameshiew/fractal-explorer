@@ -11,10 +11,13 @@ import (
 )
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
-	raster := canvas.NewRaster(draw.New(func(pixelX, pixelY, width, height int) color.Color {
-		x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
-		z := complex(x, y)
-		return draw.NewColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
-	}))
-	return newWidgetRenderer(raster, f.refresh)
+	if f.renderer == nil {
+		raster := canvas.NewRaster(draw.New(func(pixelX, pixelY, width, height int) color.Color {
+			x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
+			z := complex(x, y)
+			return draw.NewColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
+		}))
+		f.renderer = newWidgetRenderer(raster, f.refresh)
+	}
+	return f.renderer
 }

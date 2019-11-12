@@ -12,6 +12,7 @@ import (
 
 type fractalWidget struct {
 	hideable
+	renderer fyne.WidgetRenderer
 	size     fyne.Size
 	position fyne.Position
 
