@@ -9,8 +9,8 @@ import (
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
 
+	"gitlab.com/jameshiew/fractal-explorer/internal/cartesian"
 	"gitlab.com/jameshiew/fractal-explorer/internal/draw"
-	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
 )
 
@@ -19,7 +19,7 @@ type fractalWidget struct {
 	size     fyne.Size
 	position fyne.Position
 
-	viewport viewport.Viewport
+	viewport cartesian.Viewport
 	info     *widget.Label
 }
 
@@ -30,7 +30,7 @@ func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
 
 func newFractalWidget() fractalWidget {
 	wdgt := fractalWidget{
-		viewport: viewport.New(),
+		viewport: cartesian.New(),
 		info:     widget.NewLabel(""),
 	}
 	wdgt.refresh()
