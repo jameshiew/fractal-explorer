@@ -4,12 +4,16 @@ package draw
 import (
 	"image"
 	"image/color"
-	"log"
 	"sync"
 	"time"
 )
 
+type logger interface {
+	Infof(string, ...interface{})
+}
+
 type drawerInstrumenter struct {
+	log      logger
 	rendered uint
 }
 
@@ -17,7 +21,7 @@ func (i *drawerInstrumenter) instrument(nPixels int) (finish func()) {
 	start := time.Now()
 	return func() {
 		duration := time.Since(start)
-		log.Printf("%vpx in %v [%v px/s] (%v renders)", nPixels, duration, float64(nPixels)/float64(duration)*1_000_000_000, i.rendered)
+		i.log.Infof("%vpx in %v [%v px/s] (%v renders)", nPixels, duration, float64(nPixels)/float64(duration)*1_000_000_000, i.rendered)
 		i.rendered++
 	}
 }
@@ -28,9 +32,10 @@ type drawer struct {
 }
 
 // New returns a new drawing function that uses the passed pixel colorer func
-func New(pixelColorer func(pixelX, pixelY, width, height int) color.Color) func(width, height int) image.Image {
+func New(log logger, pixelColorer func(pixelX, pixelY, width, height int) color.Color) func(width, height int) image.Image {
 	drwr := &drawer{
-		pixelColorer: pixelColorer,
+		drawerInstrumenter: drawerInstrumenter{log: log},
+		pixelColorer:       pixelColorer,
 	}
 	return drwr.draw
 }
