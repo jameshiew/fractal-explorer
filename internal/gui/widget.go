@@ -2,8 +2,6 @@ package gui
 
 import (
 	"fmt"
-	"log"
-
 	"fyne.io/fyne"
 	"fyne.io/fyne/widget"
 
@@ -12,6 +10,7 @@ import (
 
 type fractalWidget struct {
 	hideable
+	log      logger
 	renderer fyne.WidgetRenderer
 	size     fyne.Size
 	position fyne.Position
@@ -20,8 +19,9 @@ type fractalWidget struct {
 	info     *widget.Label
 }
 
-func newFractalWidget() fractalWidget {
+func newFractalWidget(log logger) fractalWidget {
 	wdgt := fractalWidget{
+		log:      log,
 		viewport: cartesian.NewViewport(),
 		info:     widget.NewLabel(""),
 	}
@@ -35,7 +35,7 @@ func (f *fractalWidget) Size() fyne.Size {
 
 func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
-	log.Printf("Resized to %v\n", size)
+	f.log.Infof("Resized to %v", size)
 	widget.Renderer(f).Layout(size)
 	widget.Renderer(f).Refresh()
 }

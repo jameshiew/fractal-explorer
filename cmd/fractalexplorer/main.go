@@ -16,6 +16,6 @@ func main() {
 	log := logging.MustGetLogger(title)
 
 	log.Info("Starting up")
-	gui.Run(title)
+	gui.Run(log, title)
 	log.Info("Shutting down")
 }

@@ -2,10 +2,14 @@ package gui
 
 import "fyne.io/fyne/app"
 
+type logger interface {
+	Infof(string, ...interface{})
+}
+
 // Run launches the GUI and blocks until exit
-func Run(title string) {
+func Run(log logger, title string) {
 	window := app.New().NewWindow(title)
-	wdgt := newFractalWidget()
+	wdgt := newFractalWidget(log)
 	layoutWindow(window, wdgt)
 	window.RequestFocus()
 	window.ShowAndRun()

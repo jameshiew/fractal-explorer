@@ -1,8 +1,6 @@
 package gui
 
 import (
-	"log"
-
 	"fyne.io/fyne"
 	"fyne.io/fyne/widget"
 
@@ -10,7 +8,7 @@ import (
 )
 
 func (f *fractalWidget) Tapped(event *fyne.PointEvent) {
-	log.Printf("Tapped at (%v, %v)", event.Position.X, event.Position.Y)
+	f.log.Infof("Tapped at (%v, %v)", event.Position.X, event.Position.Y)
 	defer widget.Refresh(f)
 
 	deltaX, deltaY :=
