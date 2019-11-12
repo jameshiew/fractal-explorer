@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"github.com/op/go-logging"
 
 	"gitlab.com/jameshiew/fractal-explorer/internal/gui"
 )
@@ -9,7 +9,9 @@ import (
 const title = "Fractal Explorer"
 
 func main() {
-	log.Println("Starting up")
+	log := logging.MustGetLogger(title)
+
+	log.Info("Starting up")
 	gui.Run(title)
-	log.Println("Shutting down")
+	log.Info("Shutting down")
 }
