@@ -2,14 +2,16 @@ package gui
 
 import (
 	"fmt"
+	"image/color"
+	"log"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/widget"
+
 	"gitlab.com/jameshiew/fractal-explorer/internal/draw"
 	"gitlab.com/jameshiew/fractal-explorer/internal/gui/viewport"
 	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
-	"image/color"
-	"log"
 )
 
 type fractalWidget struct {
@@ -72,7 +74,7 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 	raster := canvas.NewRaster(draw.New(func(pixelX, pixelY, width, height int) color.Color {
 		x, y := f.viewport.PixelToCartesian(pixelX, pixelY, width, height)
 		z := complex(x, y)
-		return newColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
+		return draw.NewColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
 	}))
 	return newWidgetRenderer(raster, f.refresh)
 }
