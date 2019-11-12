@@ -1,4 +1,4 @@
-package gui
+package cartesian
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_toCartesian(t *testing.T) {
+func Test_Convert(t *testing.T) {
 	const (
 		width  = 320
 		height = 240
@@ -22,7 +22,7 @@ func Test_toCartesian(t *testing.T) {
 		{width, height, 160, -120},
 	} {
 		t.Run(fmt.Sprintf("%v, %v", tc.x, tc.y), func(t *testing.T) {
-			x, y := ToCartesian(tc.x, tc.y, width, height)
+			x, y := Convert(tc.x, tc.y, width, height)
 
 			require.EqualValues(t, tc.expectedX, x)
 			require.EqualValues(t, tc.expectedY, y)

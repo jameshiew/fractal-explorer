@@ -30,7 +30,7 @@ func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
 
 func newFractalWidget() fractalWidget {
 	wdgt := fractalWidget{
-		viewport: cartesian.New(),
+		viewport: cartesian.NewViewport(),
 		info:     widget.NewLabel(""),
 	}
 	wdgt.refresh()

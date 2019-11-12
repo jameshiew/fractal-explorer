@@ -3,11 +3,12 @@ package gui
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/widget"
+	"gitlab.com/jameshiew/fractal-explorer/internal/cartesian"
 )
 
 func (f *fractalWidget) Tapped(event *fyne.PointEvent) {
 	deltaX, deltaY :=
-		ToCartesian(
+		cartesian.Convert(
 			event.Position.X,
 			event.Position.Y,
 			f.Size().Width,

@@ -12,8 +12,8 @@ type Viewport struct {
 	x, y  float64 // location
 }
 
-// New constructs a new Viewport with the default scale
-func New() Viewport {
+// NewViewport constructs a new Viewport with the default scale
+func NewViewport() Viewport {
 	return Viewport{
 		scale: defaultScale,
 	}
@@ -53,14 +53,10 @@ func (v *Viewport) String() string {
 }
 
 func (v *Viewport) PixelToCartesian(pixelX, pixelY, width, height int) (x, y float64) {
-	x, y = toVector(pixelX, pixelY, width, height)
+	x, y = Convert(pixelX, pixelY, width, height)
 	x *= v.scale
 	y *= v.scale
 	x += v.x
 	y += v.y
 	return x, y
-}
-
-func toVector(pixelX, pixelY, width, height int) (x, y float64) {
-	return float64(pixelX - width/2), float64(-pixelY + height/2)
 }
