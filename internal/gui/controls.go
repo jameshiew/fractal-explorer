@@ -20,6 +20,9 @@ func (f *fractalWidget) controllerFunc() func(event *fyne.KeyEvent) {
 			f.viewport.Zoom(0.5)
 		case fyne.KeyS:
 			f.viewport.Zoom(2)
+		default:
+			// unhandled key event so don't do anything
+			return
 		}
 		widget.Refresh(f)
 	}
