@@ -5,7 +5,7 @@ import (
 
 	"github.com/op/go-logging"
 
-	"gitlab.com/jameshiew/fractal-explorer/internal/gui"
+	"github.com/jameshiew/fractal-explorer/internal/gui"
 )
 
 const title = "Fractal Explorer"

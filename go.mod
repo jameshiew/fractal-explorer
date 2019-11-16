@@ -1,4 +1,4 @@
-module gitlab.com/jameshiew/fractal-explorer
+module github.com/jameshiew/fractal-explorer
 
 go 1.13
 

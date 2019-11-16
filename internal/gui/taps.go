@@ -4,7 +4,7 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/widget"
 
-	"gitlab.com/jameshiew/fractal-explorer/internal/cartesian"
+	"github.com/jameshiew/fractal-explorer/internal/cartesian"
 )
 
 func (f *fractalWidget) Tapped(event *fyne.PointEvent) {

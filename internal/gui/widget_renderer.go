@@ -6,8 +6,8 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 
-	"gitlab.com/jameshiew/fractal-explorer/internal/draw"
-	"gitlab.com/jameshiew/fractal-explorer/internal/mandelbrot"
+	"github.com/jameshiew/fractal-explorer/internal/draw"
+	"github.com/jameshiew/fractal-explorer/internal/mandelbrot"
 )
 
 func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
