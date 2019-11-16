@@ -1,8 +1,8 @@
 # fractal-explorer [![pipeline status](https://gitlab.com/jameshiew/fractal-explorer/badges/master/pipeline.svg)](https://gitlab.com/jameshiew/fractal-explorer/commits/master)
 
-![Screenshot](screenshot.png "Screenshot")
-
 Small desktop application for exploring the Mandelbrot set.
+
+![Screenshot](screenshot.png "Screenshot")
 
 ## Controls
 
