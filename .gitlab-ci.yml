@@ -1,7 +1,7 @@
 ---
 stages:
   - Build CI image
-  - Build binaries
+  - Test and publish
 
 docker build:
   image: docker:19.03.1
@@ -18,11 +18,12 @@ docker build:
     changes:
       - build/ci/Dockerfile
 
-build:
+rest:
   image: $CI_REGISTRY_IMAGE:latest
-  stage: Build binaries
+  stage: Test and publish
   script:
-    - make
+    - make test-ci
+    - make app
   artifacts:
     paths:
       - fractalexplorer
