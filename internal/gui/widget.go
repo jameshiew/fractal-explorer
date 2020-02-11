@@ -25,7 +25,7 @@ func newFractalWidget(log logger) fractalWidget {
 		viewport: cartesian.NewViewport(),
 		info:     widget.NewLabel(""),
 	}
-	wdgt.refresh()
+	wdgt.Refresh()
 	return wdgt
 }
 
@@ -63,6 +63,6 @@ func (f *fractalWidget) InfoLabel() fyne.CanvasObject {
 	return f.info
 }
 
-func (f *fractalWidget) refresh() {
+func (f *fractalWidget) Refresh() {
 	f.info.SetText(f.String())
 }

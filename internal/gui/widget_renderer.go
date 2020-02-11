@@ -17,7 +17,7 @@ func (f *fractalWidget) CreateRenderer() fyne.WidgetRenderer {
 			z := complex(x, y)
 			return draw.NewColorizer(green, mandelbrot.NewImageBuilder().SetMaxIterations(70).Build())(z)
 		}))
-		f.renderer = newWidgetRenderer(raster, f.refresh)
+		f.renderer = newWidgetRenderer(raster, f.Refresh)
 	}
 	return f.renderer
 }
