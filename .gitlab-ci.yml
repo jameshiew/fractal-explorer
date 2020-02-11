@@ -1,7 +1,16 @@
 ---
 stages:
+  - Lint
   - Build CI image
   - Build binaries
+
+lint:
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  stage: Lint
+  script:
+    - make lint-go
 
 docker build:
   image: docker:19.03.1
