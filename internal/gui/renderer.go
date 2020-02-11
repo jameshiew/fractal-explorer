@@ -1,10 +1,11 @@
 package gui
 
 import (
+	"image/color"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/theme"
-	"image/color"
 )
 
 const (
