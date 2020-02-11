@@ -22,7 +22,6 @@ build:
   image: $CI_REGISTRY_IMAGE:latest
   stage: Build binaries
   script:
-    - go mod download
     - make
   artifacts:
     paths:
