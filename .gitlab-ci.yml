@@ -18,10 +18,19 @@ docker build:
     changes:
       - build/ci/Dockerfile
 
-rest:
+test with upgraded dependencies:
   image: $CI_REGISTRY_IMAGE:latest
   stage: Test and publish
   script:
+    - make upgrade-deps
+    - make build
+    - make test-ci
+
+publish:
+  image: $CI_REGISTRY_IMAGE:latest
+  stage: Test and publish
+  script:
+    - make build
     - make test-ci
     - make app
   artifacts:
