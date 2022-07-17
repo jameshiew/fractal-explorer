@@ -1,11 +1,9 @@
 module github.com/jameshiew/fractal-explorer
 
-go 1.18
-
 require (
 	fyne.io/fyne v1.2.2
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.8.0
 )
 
 require (
@@ -24,5 +22,5 @@ require (
 	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
 	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.2 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
