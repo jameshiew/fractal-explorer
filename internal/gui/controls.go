@@ -1,8 +1,7 @@
 package gui
 
 import (
-	"fyne.io/fyne"
-	"fyne.io/fyne/widget"
+	"fyne.io/fyne/v2"
 )
 
 func (f *fractalWidget) controllerFunc() func(event *fyne.KeyEvent) {
@@ -24,6 +23,9 @@ func (f *fractalWidget) controllerFunc() func(event *fyne.KeyEvent) {
 			// unhandled key event so don't do anything
 			return
 		}
-		widget.Refresh(f)
+		if f.renderer == nil {
+			return
+		}
+		f.renderer.Refresh()
 	}
 }

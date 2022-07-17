@@ -3,8 +3,8 @@ package gui
 import (
 	"image/color"
 
-	"fyne.io/fyne"
-	"fyne.io/fyne/canvas"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 
 	"github.com/jameshiew/fractal-explorer/internal/draw"
 	"github.com/jameshiew/fractal-explorer/internal/mandelbrot"

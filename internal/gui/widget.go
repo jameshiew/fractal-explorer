@@ -2,8 +2,9 @@ package gui
 
 import (
 	"fmt"
-	"fyne.io/fyne"
-	"fyne.io/fyne/widget"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/widget"
 
 	"github.com/jameshiew/fractal-explorer/internal/cartesian"
 )
@@ -36,8 +37,11 @@ func (f *fractalWidget) Size() fyne.Size {
 func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
 	f.log.Infof("Resized to %v", size)
-	widget.Renderer(f).Layout(size)
-	widget.Renderer(f).Refresh()
+	if f.renderer == nil {
+		return
+	}
+	f.renderer.Layout(size)
+	f.renderer.Refresh()
 }
 
 func (f *fractalWidget) Position() fyne.Position {
@@ -46,12 +50,18 @@ func (f *fractalWidget) Position() fyne.Position {
 
 func (f *fractalWidget) Move(position fyne.Position) {
 	f.position = position
-	widget.Renderer(f).Layout(f.size)
-	widget.Renderer(f).Refresh()
+	if f.renderer == nil {
+		return
+	}
+	f.renderer.Layout(f.size)
+	f.renderer.Refresh()
 }
 
 func (f *fractalWidget) MinSize() fyne.Size {
-	return widget.Renderer(f).MinSize()
+	if f.renderer == nil {
+		return fyne.Size{}
+	}
+	return f.renderer.MinSize()
 }
 
 func (f *fractalWidget) String() string {
