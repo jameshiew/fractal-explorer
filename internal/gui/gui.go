@@ -1,6 +1,6 @@
 package gui
 
-import "fyne.io/fyne/app"
+import "fyne.io/fyne/v2/app"
 
 type logger interface {
 	Infof(string, ...interface{})
