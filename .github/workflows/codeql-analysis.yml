@@ -40,6 +40,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y xorg-dev libglu1-mesa-dev
+
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
