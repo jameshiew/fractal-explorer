@@ -5,7 +5,7 @@ go 1.18
 require (
 	fyne.io/fyne/v2 v2.2.3
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 )
 
 require (
