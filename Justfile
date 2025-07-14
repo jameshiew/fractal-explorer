@@ -12,6 +12,3 @@ test-ci:
 
 upgrade-deps:
 	go get -u -t -v ./...
-
-ci-image:
-	docker build -t registry.gitlab.com/jameshiew/fractal-explorer build/ci
