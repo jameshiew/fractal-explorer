@@ -21,7 +21,8 @@ func (i *drawerInstrumenter) instrument(nPixels int) (finish func()) {
 	start := time.Now()
 	return func() {
 		duration := time.Since(start)
-		i.log.Info("Render completed", "pixels", nPixels, "duration", duration, "pixels_per_second", float64(nPixels)/float64(duration)*1_000_000_000, "render_count", i.rendered)
+		pixelsPerSecond := float64(nPixels) / duration.Seconds()
+		i.log.Info("Render completed", "pixels", nPixels, "duration", duration, "pixels_per_second", pixelsPerSecond, "render_count", i.rendered)
 		i.rendered++
 	}
 }
