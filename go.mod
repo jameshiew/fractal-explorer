@@ -6,7 +6,6 @@ toolchain go1.24.5
 
 require (
 	fyne.io/fyne/v2 v2.6.1
-	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
 	github.com/stretchr/testify v1.10.0
 )
 

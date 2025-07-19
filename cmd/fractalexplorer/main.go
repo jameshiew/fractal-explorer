@@ -1,9 +1,8 @@
 package main
 
 import (
+	"log/slog"
 	"os"
-
-	"github.com/op/go-logging"
 
 	"github.com/jameshiew/fractal-explorer/internal/gui"
 )
@@ -11,11 +10,13 @@ import (
 const title = "Fractal Explorer"
 
 func main() {
-	logging.SetBackend(logging.NewLogBackend(os.Stdout, "", 0))
-	logging.SetFormatter(logging.MustStringFormatter(`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}`))
-	log := logging.MustGetLogger(title)
+	opts := &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+	}
+	handler := slog.NewTextHandler(os.Stdout, opts)
+	logger := slog.New(handler)
 
-	log.Info("Starting up")
-	gui.Run(log, title)
-	log.Info("Shutting down")
+	logger.Info("Starting up")
+	gui.Run(logger, title)
+	logger.Info("Shutting down")
 }

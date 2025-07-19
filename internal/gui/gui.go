@@ -3,7 +3,7 @@ package gui
 import "fyne.io/fyne/v2/app"
 
 type logger interface {
-	Infof(string, ...interface{})
+	Info(msg string, args ...any)
 }
 
 // Run launches the GUI and blocks until exit

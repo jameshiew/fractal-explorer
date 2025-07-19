@@ -36,7 +36,7 @@ func (f *fractalWidget) Size() fyne.Size {
 
 func (f *fractalWidget) Resize(size fyne.Size) {
 	f.size = size
-	f.log.Infof("Resized to %v", size)
+	f.log.Info("Resized", "size", size)
 	if f.renderer == nil {
 		return
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 type logger interface {
-	Infof(string, ...interface{})
+	Info(msg string, args ...any)
 }
 
 type drawerInstrumenter struct {
@@ -21,7 +21,7 @@ func (i *drawerInstrumenter) instrument(nPixels int) (finish func()) {
 	start := time.Now()
 	return func() {
 		duration := time.Since(start)
-		i.log.Infof("%vpx in %v [%v px/s] (%v renders)", nPixels, duration, float64(nPixels)/float64(duration)*1_000_000_000, i.rendered)
+		i.log.Info("Render completed", "pixels", nPixels, "duration", duration, "pixels_per_second", float64(nPixels)/float64(duration)*1_000_000_000, "render_count", i.rendered)
 		i.rendered++
 	}
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func (f *fractalWidget) Tapped(event *fyne.PointEvent) {
-	f.log.Infof("Tapped at (%v, %v)", event.Position.X, event.Position.Y)
+	f.log.Info("Tapped", "x", event.Position.X, "y", event.Position.Y)
 	defer func() {
 		if f.renderer == nil {
 			return
