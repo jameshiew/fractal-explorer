@@ -5,7 +5,7 @@ go 1.24
 toolchain go1.24.5
 
 require (
-	fyne.io/fyne/v2 v2.6.1
+	fyne.io/fyne/v2 v2.6.2
 	github.com/stretchr/testify v1.10.0
 )
 
