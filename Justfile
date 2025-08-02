@@ -1,6 +1,9 @@
 build:
 	go build -v ./...
 
+run:
+	go run -v ./cmd/fractalexplorer
+
 app:
 	go build -v ./cmd/fractalexplorer
 
