@@ -49,7 +49,7 @@ func (v *Viewport) Zoom(factor float64) {
 }
 
 func (v *Viewport) String() string {
-	return fmt.Sprintf("(%v, %v) @ %vx", v.x, v.y, v.scale)
+	return fmt.Sprintf("Center: (%.6f, %.6f) | Zoom: %.3fx", v.x, v.y, 1.0/v.scale)
 }
 
 func (v *Viewport) PixelToCartesian(pixelX, pixelY, width, height int) (x, y float64) {

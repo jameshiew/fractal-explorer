@@ -65,7 +65,7 @@ func (f *fractalWidget) MinSize() fyne.Size {
 }
 
 func (f *fractalWidget) String() string {
-	return fmt.Sprintf("%v - ", f.Size()) + f.viewport.String()
+	return fmt.Sprintf("Size: %dx%d | %s", int(f.Size().Width), int(f.Size().Height), f.viewport.String())
 }
 
 // InfoLabel returns a label which is updated with the information for this fractal widget
