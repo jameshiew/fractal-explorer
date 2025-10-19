@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y xorg-dev libglu1-mesa-dev
         if: matrix.os == 'ubuntu-24.04-arm'
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "1.24"
       - run: go version
