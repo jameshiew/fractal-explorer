@@ -2,7 +2,6 @@ package mandelbrot
 
 import (
 	"fmt"
-	"math/cmplx"
 )
 
 const (
@@ -60,7 +59,8 @@ func (m Image) IterateWhileNotReachingBound(c complex128) (iterations uint16) {
 		n uint16
 		z complex128
 	)
-	for cmplx.Abs(z) <= m.bound && n < m.maxIterations {
+	boundSquared := m.bound * m.bound
+	for real(z)*real(z)+imag(z)*imag(z) <= boundSquared && n < m.maxIterations {
 		z = z*z + c
 		n++
 	}
