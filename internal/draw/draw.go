@@ -69,12 +69,9 @@ func (d *drawer) draw(width, height int) image.Image {
 	var wg sync.WaitGroup
 	wg.Add(nPixels)
 	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
-		for {
-			select {
-			case pxl := <-pixels:
-				img.Set(pxl.x, pxl.y, pxl.color)
-				wg.Done()
-			}
+		for pxl := range pixels {
+			img.Set(pxl.x, pxl.y, pxl.color)
+			wg.Done()
 		}
 	}()
 	for i := 0; i < nWorkers; i++ {
