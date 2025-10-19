@@ -8,3 +8,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      gomod-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
