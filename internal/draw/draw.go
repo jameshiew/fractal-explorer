@@ -41,19 +41,6 @@ func New(log logger, pixelColorer func(pixelX, pixelY, width, height int) color.
 	return drwr.draw
 }
 
-// drawSingleThreaded is faster for larger canvases for whatever reason
-func (d *drawer) drawSingleThreaded(width, height int) image.Image {
-	nPixels := width * height
-	defer d.instrument(nPixels)()
-	img := image.NewRGBA(image.Rect(0, 0, width, height))
-	for y := 0; y < height; y++ {
-		for x := 0; x < width; x++ {
-			img.Set(x, y, d.pixelColorer(x, y, width, height))
-		}
-	}
-	return img
-}
-
 func (d *drawer) draw(width, height int) image.Image {
 	nPixels := width * height
 	defer d.instrument(nPixels)()
