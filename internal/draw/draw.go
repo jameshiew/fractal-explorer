@@ -4,6 +4,7 @@ package draw
 import (
 	"image"
 	"image/color"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -45,42 +46,32 @@ func (d *drawer) draw(width, height int) image.Image {
 	nPixels := width * height
 	defer d.instrument(nPixels)()
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
-	const nWorkers = 1024
-	jobs := make(chan struct {
-		x, y int
-	}, nPixels)
-	pixels := make(chan struct {
-		x, y  int
-		color color.Color
-	}, nPixels)
+
+	nWorkers := runtime.NumCPU()
+	if nWorkers < 1 {
+		nWorkers = 1
+	}
+
+	rows := make(chan int, height)
 	var wg sync.WaitGroup
-	wg.Add(nPixels)
-	go func() { // img.Set should only be called by one goroutine at a time, handle all calls via this goroutine
-		for pxl := range pixels {
-			img.Set(pxl.x, pxl.y, pxl.color)
-			wg.Done()
-		}
-	}()
+
 	for i := 0; i < nWorkers; i++ {
+		wg.Add(1)
 		go func() {
-			for j := range jobs {
-				pixels <- struct {
-					x, y  int
-					color color.Color
-				}{
-					x:     j.x,
-					y:     j.y,
-					color: d.pixelColorer(j.x, j.y, width, height),
+			defer wg.Done()
+			for y := range rows {
+				for x := 0; x < width; x++ {
+					img.Set(x, y, d.pixelColorer(x, y, width, height))
 				}
 			}
 		}()
 	}
+
 	for y := 0; y < height; y++ {
-		for x := 0; x < width; x++ {
-			jobs <- struct{ x, y int }{x: x, y: y}
-		}
+		rows <- y
 	}
-	close(jobs)
+	close(rows)
 	wg.Wait()
+
 	return img
 }
