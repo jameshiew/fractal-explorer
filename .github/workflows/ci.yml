@@ -1,4 +1,4 @@
-name: Build
+name: CI
 
 permissions:
   contents: read
@@ -31,4 +31,19 @@ jobs:
         with:
           go-version: stable
       - run: go version
-      - run: go build -v ./...
+      - uses: taiki-e/install-action@just
+      - run: just build
+  test:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y xorg-dev libglu1-mesa-dev
+      - uses: actions/setup-go@v6
+        with:
+          go-version: stable
+      - run: go version
+      - uses: taiki-e/install-action@just
+      - run: just test-ci
