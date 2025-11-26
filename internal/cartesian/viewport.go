@@ -41,11 +41,10 @@ func (v *Viewport) Down() {
 }
 
 func (v *Viewport) Zoom(factor float64) {
-	// from https://stackoverflow.com/a/30410948
-	newScale := factor * v.scale
-	delta := newScale - v.scale
-	v.scale = newScale
-	v.Move(-(v.x * delta), -(v.y * delta))
+	if factor <= 0 {
+		return
+	}
+	v.scale *= factor
 }
 
 func (v *Viewport) String() string {
