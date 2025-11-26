@@ -1,8 +1,6 @@
 module github.com/jameshiew/fractal-explorer
 
-go 1.24
-
-toolchain go1.24.5
+go 1.25
 
 require (
 	fyne.io/fyne/v2 v2.7.0
