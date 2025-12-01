@@ -3,7 +3,7 @@ module github.com/jameshiew/fractal-explorer
 go 1.25
 
 require (
-	fyne.io/fyne/v2 v2.7.0
+	fyne.io/fyne/v2 v2.7.1
 	github.com/stretchr/testify v1.11.1
 )
 
